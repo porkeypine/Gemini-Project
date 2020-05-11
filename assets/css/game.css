@@ -1,0 +1,34 @@
+body {
+    background: rgb(223, 247, 255);
+    font-family: sans-serif;
+}
+
+.container {
+    display: block;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text {
+    font-size: 1.5rem;
+}
+
+/* .text::first-letter {
+    font-size: 1.5rem;
+    font-weight: bold;
+} */
+
+p::selection {
+    background: rgb(81, 204, 163);
+    color: white;
+}
+
+footer {
+    position: absolute;
+    bottom: 0px;
+    right: 1rem;
+    font-size: 12px;
+}

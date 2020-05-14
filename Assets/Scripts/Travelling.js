@@ -8,6 +8,13 @@ class RoomTemplate {
     }
 }
 
+let emptyRoom = new RoomTemplate();
+emptyRoom.id = -1;
+emptyRoom.backgroundSrc = "";
+emptyRoom.props = [];
+emptyRoom.itemCoordinates = [];
+emptyRoom.reachableRooms = [];
+
 let Room0 = new RoomTemplate();
 Room0.id = 0;
 Room0.backgroundSrc = "Assets/Images/0.jpg";
@@ -32,72 +39,62 @@ Room3.backgroundSrc = "Assets/Images/3.jpg";
 Room3.props = [];
 Room3.itemCoordinates = [];
 
-Room0.reachableRooms = [Room1, Room2, Room3, null];
-Room1.reachableRooms = [Room3, null, Room1, null];
-Room2.reachableRooms = [null, null, null, Room1];
-Room3.reachableRooms = [Room1, Room2, null, Room3];
+Room0.reachableRooms = [Room1, Room2, Room3, emptyRoom];
+Room1.reachableRooms = [Room3, emptyRoom, Room2, Room0];
+Room2.reachableRooms = [emptyRoom, Room0, emptyRoom, Room1];
+Room3.reachableRooms = [Room1, Room0, emptyRoom, Room0];
 
 let curr = Room0;
 let prev;
-let reachable = curr.reachableRooms;
-let currentRoom = document.getElementById("currentRoom");
-currentRoom.src = curr.backgroundSrc;
-let firstDoor = document.getElementById("firstDoor");
-let secondDoor = document.getElementById("secondDoor");
-let thirdDoor = document.getElementById("thirdDoor");
-let backDoor = document.getElementById("backwards");
+
 
 function update() {
-    if (reachable[0] != null) {
+    let reachable = curr.reachableRooms;
+    let currentRoom = document.getElementById("currentRoom");
+    currentRoom.src = curr.backgroundSrc;
+    currentRoom.name = curr.id;
+    let firstDoor = document.getElementById("firstDoor");
+    let secondDoor = document.getElementById("secondDoor");
+    let thirdDoor = document.getElementById("thirdDoor");
+    let backDoor = document.getElementById("backwards");
+    if (reachable[0].id != -1) {
         firstDoor.coords = "160, 140, 355, 520";
         firstDoor.addEventListener("click", function() {
             prev = curr;
             curr = reachable[0];
-            reachable = curr.reachableRooms;
-            currentRoom.src = curr.backgroundSrc;
-            currentRoom.name = curr.id;
             update();
         });
     } else {
         firstDoor.coords = "";
     }
 
-    if (reachable[1] != null) {
+    if (reachable[1].id != -1) {
         secondDoor.coords = "470, 140, 665, 520";
         secondDoor.addEventListener("click", function() {
             prev = curr;
             curr = reachable[1];
-            reachable = curr.reachableRooms;
-            currentRoom.src = curr.backgroundSrc;
-            currentRoom.name = curr.id;
             update();
         });
     } else {
         secondDoor.coords = "";
     }
 
-    if (reachable[2] != null) {
+    if (reachable[2].id != -1) {
         thirdDoor.coords = "800, 140, 950, 520";
-            thirdDoor.addEventListener("click", function() {
+        thirdDoor.addEventListener("click", function() {
             prev = curr;
             curr = reachable[2];
-            reachable = curr.reachableRooms;
-            currentRoom.src = curr.backgroundSrc;
-            currentRoom.name = curr.id;
             update();
         });
     } else {
     secondDoor.coords = "";
     }
 
-    if (reachable[3] != null) {
+    if (reachable[3].id != -1) {
         backDoor.coords = "0, 550, 1137, 662";
         backDoor.addEventListener("click", function() {
             prev = curr;
-            curr = reachable[4];
-            reachable = curr.reachableRooms;
-            currentRoom.src = curr.backgroundSrc;
-            currentRoom.name = curr.id;
+            curr = reachable[3];
             update();
         });
     } else {

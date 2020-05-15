@@ -41,6 +41,11 @@ body, html {
     transform: translateX(-50%);
 }
 
+.doorAjar:hover {
+    cursor: pointer;
+}
+
+/* for animation stuffs in the future */
 .door:hover {
     animation: pop 3s ease; 
     border: 5px solid black;
@@ -70,7 +75,6 @@ body, html {
 .text {
     font-family: 'Lucida Sans';
     font-size: 0.9rem;
-    font-size-adjust: initial;
     margin: 0px;
     padding: 1px;
     padding-left: 3px;
@@ -81,6 +85,11 @@ body, html {
     font-family: 'Lucida Sans';
     font-size: 0.9rem;
     font-style: italic;
+    margin: 0px;
+    margin-top: 10px;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
     color: #0076EF;
     text-decoration-line: underline;
 }

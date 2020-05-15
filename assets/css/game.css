@@ -1,9 +1,14 @@
-body {
-    background: rgb(223, 247, 255);
+body, html {
+    background: white; 
     font-family: sans-serif;
+    height: 100%;
 }
 
-.container {
+.welcome {
+    background: rgb(223, 247, 255);
+}
+
+.welcomeContainer {
     display: block;
     text-align: center;
     position: fixed;
@@ -12,14 +17,101 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.oneDoorRoom {
+    /* background image stuff - for old browsers that don't do svg */
+    background-image: url("../Images/OneDoor.png");
+    background-size: contain;
+        -webkit-background-size: contain;
+        -moz-background-size: contain;
+        -o-background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.background {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.door:hover {
+    animation: pop 3s ease; 
+    border: 5px solid black;
+}
+
+@keyframes pop {
+    0% {
+
+    }
+    50% {
+
+    }
+    100% {
+
+    }
+}
+
+.textContainer {
+    background-color: white;
+    width: fit-content;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
 .text {
+    font-family: 'Lucida Sans';
+    font-size: 0.9rem;
+    font-size-adjust: initial;
+    margin: 0px;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.clickText {
+    font-family: 'Lucida Sans';
+    font-size: 14px;
+    color: #0076EF;
+    text-decoration-line: underline;
+}
+
+.clickText:hover {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+/* .hide::before {
+    animation: fadeText 1s ease forwards;
+}
+
+@keyframes fadeText {
+    from {
+        opacity: 1;
+        pointer-events: all;
+    }
+    to {
+        opacity: 0;
+        pointer-events: none;
+    }
+} */
+
+.welcomeText {
     font-size: 1.5rem;
 }
 
-/* .text::first-letter {
-    font-size: 1.5rem;
-    font-weight: bold;
-} */
+.center {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    width: 100%;
+    text-align: center;
+}
 
 p::selection {
     background: rgb(81, 204, 163);

@@ -17,25 +17,25 @@ emptyRoom.reachableRooms = [];
 
 let Room0 = new RoomTemplate();
 Room0.id = 0;
-Room0.backgroundSrc = "Assets/Images/0.jpg";
+Room0.backgroundSrc = "assets/images/0.jpg";
 Room0.props = [];
 Room0.itemCoordinates = [];
 
 let Room1 = new RoomTemplate();
 Room1.id = 1;
-Room1.backgroundSrc = "Assets/Images/1.jpg";
+Room1.backgroundSrc = "assets/images/1.jpg";
 Room1.props = [];
 Room1.itemCoordinates = [];
 
 let Room2 = new RoomTemplate();
 Room2.id = 2;
-Room2.backgroundSrc = "Assets/Images/2.jpg";
+Room2.backgroundSrc = "assets/images/2.jpg";
 Room2.props = [];
 Room2.itemCoordinates = [];
 
 let Room3 = new RoomTemplate();
 Room3.id = 3;
-Room3.backgroundSrc = "Assets/Images/3.jpg";
+Room3.backgroundSrc = "assets/images/3.jpg";
 Room3.props = [];
 Room3.itemCoordinates = [];
 
@@ -87,7 +87,7 @@ function update() {
             update();
         });
     } else {
-    secondDoor.coords = "";
+        thirdDoor.coords = "";
     }
 
     if (reachable[3].id != -1) {

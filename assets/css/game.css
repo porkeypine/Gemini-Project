@@ -35,6 +35,12 @@ body, html {
     transform: translateX(-50%);
 }
 
+.doorAjarBg {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .door:hover {
     animation: pop 3s ease; 
     border: 5px solid black;
@@ -73,7 +79,8 @@ body, html {
 
 .clickText {
     font-family: 'Lucida Sans';
-    font-size: 14px;
+    font-size: 0.9rem;
+    font-style: italic;
     color: #0076EF;
     text-decoration-line: underline;
 }

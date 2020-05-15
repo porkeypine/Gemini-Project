@@ -46,17 +46,19 @@ Room3.reachableRooms = [Room1, Room0, emptyRoom, Room0];
 
 let curr = Room0;
 let prev;
-
+let firstDoor = document.getElementById("firstDoor");
+let secondDoor = document.getElementById("secondDoor");
+let thirdDoor = document.getElementById("thirdDoor");
+let backDoor = document.getElementById("backwards");
+let reachable = curr.reachableRooms;
+let currentRoom = document.getElementById("currentRoom");
 
 function update() {
-    let reachable = curr.reachableRooms;
-    let currentRoom = document.getElementById("currentRoom");
+    reachable = curr.reachableRooms;
+    currentRoom = document.getElementById("currentRoom");
     currentRoom.src = curr.backgroundSrc;
     currentRoom.name = curr.id;
-    let firstDoor = document.getElementById("firstDoor");
-    let secondDoor = document.getElementById("secondDoor");
-    let thirdDoor = document.getElementById("thirdDoor");
-    let backDoor = document.getElementById("backwards");
+    
     if (reachable[0].id != -1) {
         firstDoor.coords = "160, 140, 355, 520";
         firstDoor.addEventListener("click", function() {
@@ -87,7 +89,7 @@ function update() {
             update();
         });
     } else {
-        thirdDoor.coords = "";
+    thirdDoor.coords = "";
     }
 
     if (reachable[3].id != -1) {

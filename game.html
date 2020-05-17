@@ -10,22 +10,34 @@
 </head>
 
 <body>
+    <style>
+        .hidden{
+            display:none
+        }
+    </style>
     <svg id = "currentRoom" name = "0" width="100%" height="100%" viewBox="0 0 3508 2481" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-        <image id = "background" width = "3508" height = "2481" xlink:href = "assets/images/OneDoor.svg">
-        </image>
+        <image id = "background" width = "3508" height = "2481" xlink:href = ""></image>
+        <!--LeftDoor (door0)-->
+        <image id = "firstDoorAjar" width = "3508" height = "2481" class = hidden fill-opacity = "1" xlink:href = "assets/images/Rooms/LeftDoorAjar.svg"></image> 
         <a href = # id = "firstDoor">
-            <rect x="1773" id = "door1" y="1026" width="568" height="761" style="fill:white;fill-opacity:0;"/>
+            <polygon id = "door0" points = "400,880 773,1022 783,1960 419,2182" style="fill:white;fill-opacity:0;"/>
         </a>
+        <!--CenterDoor (door1)-->
+        <image id = "secondDoorAjar" width = "3508" height = "2481" class = hidden fill-opacity = "1" xlink:href = "assets/images/Rooms/CenterDoorAjar.svg"></image> 
+        <a href = # id = "secondDoor">
+            <rect id = "door1" x="1773" y="1026" width="568" height="761" style="fill:white;fill-opacity:0;"/>
+        </a>
+        <!--RightDoor (door2)-->
+        <image id = "thirdDoorAjar" width = "3508" height = "2481" class = hidden fill-opacity = "1" xlink:href = "assets/images/Rooms/RightDoorAjar.svg"></image> 
+        <a href = # id = "thirdDoor">
+            <polygon id = "door2" points = "2591,980 3423,766 3411,2434 2953,2108" style="fill:white;fill-opacity:0;"/>
+        </a>
+        <!--BackDoor (door3)-->
+        <a href = # id = "backDoor">
+            <rect id = "door3" x = "1440" y = "2340" width = "660" height = "141" style="fill:white;fill-opacity:0;"/>
+        </a>
+        
     </svg>
-
-    <!-- <img id = "currentRoom" name = "0" class = "center" usemap = "#doors">
-        <map name = "doors">
-            <area shape = "rect" id = "firstDoor" href = #>
-            <area shape = "rect" id = "secondDoor" href = #>
-            <area shape = "rect" id = "thirdDoor" href = #>
-            <area shape = "rect" id = "backwards" href = # >
-        </map>
-    -->
     <script src = "assets/scripts/travelling.js"></script>
 
     <!--Bootstrap for JS

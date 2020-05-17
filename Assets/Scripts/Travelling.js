@@ -4,10 +4,7 @@ class RoomTemplate {
         this.backgroundSrc = "unknown";
         this.props = [];
         this.itemCoordinates = [];
-        this.reachableRooms = [null, null, null, null];
-        this.openDoor0;
-        this.openDoor1;
-        this.openDoor2;
+        this.reachableRooms = [];
     }
 }
 
@@ -20,114 +17,138 @@ emptyRoom.reachableRooms = [];
 
 let Room0 = new RoomTemplate();
 Room0.id = 0;
-Room0.backgroundSrc = "assets/images/OneDoor.svg";
+Room0.backgroundSrc = "assets/images/Rooms/OneDoorBackground.svg";
 Room0.props = [];
 Room0.itemCoordinates = [];
-Room0.openDoor0 = "assets/images/OneDoorAjar.svg";
 
 let Room1 = new RoomTemplate();
 Room1.id = 1;
-Room1.backgroundSrc = "assets/images/ThreeDoor.png";
+Room1.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
 Room1.props = [];
 Room1.itemCoordinates = [];
 
 let Room2 = new RoomTemplate();
 Room2.id = 2;
-Room2.backgroundSrc = "assets/images/OneDoor.svg";
+Room2.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
 Room2.props = [];
 Room2.itemCoordinates = [];
 
 let Room3 = new RoomTemplate();
 Room3.id = 3;
-Room3.backgroundSrc = "assets/images/OneDoor.svg";
+Room3.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
 Room3.props = [];
 Room3.itemCoordinates = [];
 
-Room0.reachableRooms = [Room1, Room2, Room3, emptyRoom];
+Room0.reachableRooms = [emptyRoom, Room1, emptyRoom, emptyRoom];
 Room1.reachableRooms = [Room3, emptyRoom, Room2, Room0];
 Room2.reachableRooms = [emptyRoom, Room0, emptyRoom, Room1];
 Room3.reachableRooms = [Room1, Room0, emptyRoom, Room0];
 
-let curr = Room0;
-let prev;
+let curr;
 let firstDoor = document.getElementById("firstDoor");
-let door1 = document.getElementById("door1");
+let firstDoorAjar = document.getElementById("firstDoorAjar");
+let door0 = document.getElementById("door0");
 let secondDoor = document.getElementById("secondDoor");
+let secondDoorAjar = document.getElementById("secondDoorAjar");
+let door1 = document.getElementById("door1");
 let thirdDoor = document.getElementById("thirdDoor");
-let backDoor = document.getElementById("backwards");
-let reachable = curr.reachableRooms;
+let thirdDoorAjar = document.getElementById("thirdDoorAjar");
+let door2 = document.getElementById("door2");
+let backDoor = document.getElementById("backDoor");
 let currentRoom = document.getElementById("currentRoom");
 let background = document.getElementById("background");
+let room;
+room = Room0;
 
 function update() {
-    reachable = curr.reachableRooms;
-    currentRoom.name = curr.id;
+    curr = room;
+    curr.reachableRooms = room.reachableRooms;
+    currentRoom.setAttributeNS('', 'name', curr.id);
     background.setAttributeNS(
         'http://www.w3.org/1999/xlink', 
         'xlink:href', 
         curr.backgroundSrc);
     currentRoom.name = curr.id;
     
-    if (reachable[0].id != -1) {
-        door1.x = 1773;
-        door1.y = 1026;
-        door1.width = 568;
-        door1.height = 761;
+    if (curr.reachableRooms[0].id != -1) {
+        door0.setAttributeNS('', 'points', '400,880 773,1022 783,1960 419,2182');
         firstDoor.addEventListener("mouseover", function() {
-            background.setAttributeNS(
-                'http://www.w3.org/1999/xlink', 
-                'xlink:href', 
-                curr.openDoor0);
+            firstDoorAjar.setAttributeNS('', 'class', '');
+            firstDoorAjar.setAttributeNS('', 'name', curr.reachableRooms[0].id);
         });
         firstDoor.addEventListener("mouseout", function() {
-            background.setAttributeNS(
-                'http://www.w3.org/1999/xlink', 
-                'xlink:href', 
-                curr.backgroundSrc);
+            firstDoorAjar.setAttributeNS('', 'class', 'hidden');
+            firstDoorAjar.setAttributeNS('', 'name', '');
         });
         firstDoor.addEventListener("click", function() {
-            prev = curr;
-            curr = reachable[0];
+            room = curr.reachableRooms[0];
             update();
+            return;
         });
     } else {
-        door1.x = 0;
-        door1.y = 0;
-        door1.width = 0;
-        door1.height = 0;
+        door0.setAttributeNS('', 'points', '');
     }
 
-  /*  if (reachable[1].id != -1) {
-        secondDoor.coords = "470, 140, 665, 520";
+    if (curr.reachableRooms[1].id != -1) {
+        door1.setAttributeNS('', 'x', '1773');
+        door1.setAttributeNS('', 'y', '1026');
+        door1.setAttributeNS('', 'width', '568');
+        door1.setAttributeNS('', 'height', '761');
+        secondDoor.addEventListener("mouseover", function() {
+            secondDoorAjar.setAttributeNS('', 'class', '');
+            secondDoorAjar.setAttributeNS('', 'name', curr.reachableRooms[1].id);
+        });
+        secondDoor.addEventListener("mouseout", function() {
+            secondDoorAjar.setAttributeNS('', 'class', 'hidden');
+            secondDoorAjar.setAttributeNS('', 'name', '');
+        });
         secondDoor.addEventListener("click", function() {
-            prev = curr;
-            curr = reachable[1];
+            room = curr.reachableRooms[1];
             update();
+            return;
         });
     } else {
-        secondDoor.coords = "";
+        door1.setAttributeNS('', 'x', '0');
+        door1.setAttributeNS('', 'y', '0');
+        door1.setAttributeNS('', 'width', '0');
+        door1.setAttributeNS('', 'height', '0');
     }
 
-    if (reachable[2].id != -1) {
-        thirdDoor.coords = "800, 140, 950, 520";
+    if (curr.reachableRooms[2].id != -1) {
+        door2.setAttributeNS('', 'points', '2591,980 3423,766 3411,2434 2953,2108');
+        thirdDoor.addEventListener("mouseover", function() {
+            thirdDoorAjar.setAttributeNS('', 'class', '');
+            thirdDoorAjar.setAttributeNS('', 'name', curr.reachableRooms[2].id);
+        });
+        thirdDoor.addEventListener("mouseout", function() {
+            thirdDoorAjar.setAttributeNS('', 'class', 'hidden');
+            thirdDoorAjar.setAttributeNS('', 'name', 'reachable[2].id');
+        });
         thirdDoor.addEventListener("click", function() {
-            prev = curr;
-            curr = reachable[2];
+            room = curr.reachableRooms[2];
             update();
+            return;
         });
     } else {
-    thirdDoor.coords = "";
+        door2.setAttributeNS('', 'points', '');
     }
 
-    if (reachable[3].id != -1) {
-        backDoor.coords = "0, 550, 1137, 662";
+    if (curr.reachableRooms[3].id != -1) {
+
+        door3.setAttributeNS('', 'x', '1440');
+        door3.setAttributeNS('', 'y', '2340');
+        door3.setAttributeNS('', 'width', '660');
+        door3.setAttributeNS('', 'height', '141');
         backDoor.addEventListener("click", function() {
-            prev = curr;
-            curr = reachable[3];
+            room = curr.reachableRooms[3];
             update();
+            return;
         });
     } else {
-        backDoor.coords = "";
-    }*/
+        door3.setAttributeNS('', 'x', '0');
+        door3.setAttributeNS('', 'y', '0');
+        door3.setAttributeNS('', 'width', '0');
+        door3.setAttributeNS('', 'height', '0');
+    }
 }
 update();

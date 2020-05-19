@@ -57,9 +57,24 @@ let backDoor = document.getElementById("backDoor");
 let currentRoom = document.getElementById("currentRoom");
 let background = document.getElementById("background");
 let room;
-room = Room0;
+let curr = Room0;
+
+update(Room0);
+firstDoor.addEventListener("click", function() {
+    update(curr.reachableRooms[0]);
+});
+secondDoor.addEventListener("click", function() {
+    update(curr.reachableRooms[1]);
+});
+thirdDoor.addEventListener("click", function() {
+    update(curr.reachableRooms[2]);
+});
+backDoor.addEventListener("click", function() {
+    update(curr.reachableRooms[3]);
+});
 
 function update(room) {
+    curr = room;
     currentRoom.setAttributeNS('', 'name', room.id);
     background.setAttributeNS(
         'http://www.w3.org/1999/xlink', 
@@ -76,10 +91,6 @@ function update(room) {
         firstDoor.addEventListener("mouseout", function() {
             firstDoorAjar.setAttributeNS('', 'class', 'hide');
             firstDoorAjar.setAttributeNS('', 'name', '');
-        });
-        firstDoor.addEventListener("click", function() {
-            update(room.reachableRooms[0]);
-            return;
         });
     } else {
         door0.setAttributeNS('', 'points', '');
@@ -98,10 +109,6 @@ function update(room) {
             secondDoorAjar.setAttributeNS('', 'class', 'hide');
             secondDoorAjar.setAttributeNS('', 'name', '');
         });
-        secondDoor.addEventListener("click", function() {
-            update(room.reachableRooms[1]);
-            return;
-        });
     } else {
         // door1.setAttributeNS('', 'x', '0');
         // door1.setAttributeNS('', 'y', '0');
@@ -119,10 +126,6 @@ function update(room) {
             thirdDoorAjar.setAttributeNS('', 'class', 'hide');
             thirdDoorAjar.setAttributeNS('', 'name', 'reachable[2].id');
         });
-        thirdDoor.addEventListener("click", function() {
-            update(room.reachableRooms[2]);
-            return;
-        });
     } else {
         door2.setAttributeNS('', 'points', '');
     }
@@ -133,10 +136,6 @@ function update(room) {
         door3.setAttributeNS('', 'y', '2340');
         door3.setAttributeNS('', 'width', '660');
         door3.setAttributeNS('', 'height', '141');
-        backDoor.addEventListener("click", function() {
-            update(room.reachableRooms[3]);
-            return;
-        });
     } else {
         door3.setAttributeNS('', 'x', '0');
         door3.setAttributeNS('', 'y', '0');
@@ -144,4 +143,3 @@ function update(room) {
         door3.setAttributeNS('', 'height', '0');
     }
 }
-update(Room0);

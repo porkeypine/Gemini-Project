@@ -32,13 +32,13 @@ body, html {
 .background {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-44%);
 }
 
 .doorAjarBg {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-44%);
 }
 
 .doorAjar:hover {
@@ -101,6 +101,7 @@ body, html {
 .hide {
     display: none;
 }
+
 
 /* .hide::before {
     animation: fadeText 1s ease forwards;

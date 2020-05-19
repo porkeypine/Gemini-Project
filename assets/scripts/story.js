@@ -29,4 +29,8 @@ $(document).ready(function(){
         $(".door").hide(0);
         $("#text4").delay(1000).fadeIn(500);
     })
+
+    $("#slot1").click(function() {
+        console.log("boop");
+    })
 });

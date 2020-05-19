@@ -102,6 +102,18 @@ body, html {
     display: none;
 }
 
+.inventory {
+    cursor: pointer;
+}
+
+.key {
+    position: absolute;
+    left: 31%;
+    top: 85%;
+    cursor: pointer;
+    background-image: url('/assets/Images/Key.png');
+}
+
 
 /* .hide::before {
     animation: fadeText 1s ease forwards;

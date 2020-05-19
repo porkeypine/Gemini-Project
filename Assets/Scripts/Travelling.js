@@ -97,10 +97,10 @@ function update(room) {
     }
 
     if (room.reachableRooms[1].id != -1) {
-        // door1.setAttributeNS('', 'x', '1773');
-        // door1.setAttributeNS('', 'y', '1026');
-        // door1.setAttributeNS('', 'width', '568');
-        // door1.setAttributeNS('', 'height', '761');
+        door1.setAttributeNS('', 'x', '1773');
+        door1.setAttributeNS('', 'y', '1026');
+        door1.setAttributeNS('', 'width', '568');
+        door1.setAttributeNS('', 'height', '761');
         secondDoor.addEventListener("mouseover", function() {
             secondDoorAjar.setAttributeNS('', 'class', '');
             secondDoorAjar.setAttributeNS('', 'name', room.reachableRooms[1].id);
@@ -110,10 +110,10 @@ function update(room) {
             secondDoorAjar.setAttributeNS('', 'name', '');
         });
     } else {
-        // door1.setAttributeNS('', 'x', '0');
-        // door1.setAttributeNS('', 'y', '0');
-        // door1.setAttributeNS('', 'width', '0');
-        // door1.setAttributeNS('', 'height', '0');
+        door1.setAttributeNS('', 'x', '0');
+        door1.setAttributeNS('', 'y', '0');
+        door1.setAttributeNS('', 'width', '0');
+        door1.setAttributeNS('', 'height', '0');
     }
 
     if (room.reachableRooms[2].id != -1) {

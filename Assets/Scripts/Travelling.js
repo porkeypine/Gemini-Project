@@ -8,6 +8,17 @@ class RoomTemplate {
     }
 }
 
+class prop {
+    constructor() {
+        this.id = "unknown";
+        this.imgsrc = "unknown";
+        this.x = -1;
+        this.y = -1;
+        this.height = -1;
+        this.width = -1; 
+    }
+}
+
 let emptyRoom = new RoomTemplate();
 emptyRoom.id = -1;
 emptyRoom.backgroundSrc = "";
@@ -18,8 +29,14 @@ emptyRoom.reachableRooms = [];
 let Room0 = new RoomTemplate();
 Room0.id = 0;
 Room0.backgroundSrc = "assets/images/Rooms/OneDoorBackground.svg";
-Room0.props = [];
-Room0.itemCoordinates = [];
+let key = new prop();
+key.id = "key";
+key.imgsrc = "assets/images/key.svg";
+key.x = 727;
+key.y = 2178;
+key.width = 185;
+key.height = 169;
+Room0.props = [key];
 
 let Room1 = new RoomTemplate();
 Room1.id = 1;
@@ -56,8 +73,22 @@ let door2 = document.getElementById("door2");
 let backDoor = document.getElementById("backDoor");
 let currentRoom = document.getElementById("currentRoom");
 let background = document.getElementById("background");
+let allprops = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2")]
 let room;
 let curr = Room0;
+//slots are spaces, items are the items (images etc)
+let slot0 = document.getElementById("slot0");
+let slot1 = document.getElementById("slot1");
+let slot2 = document.getElementById("slot2");
+let slot3 = document.getElementById("slot3");
+let slot4 = document.getElementById("slot4");
+let slot5 = document.getElementById("slot5");
+let item0 = document.getElementById("item0");
+let item1 = document.getElementById("item1");
+let item2 = document.getElementById("item2");
+let item3 = document.getElementById("item3");
+let item4 = document.getElementById("item4");
+let item5 = document.getElementById("item5");
 
 update(Room0);
 firstDoor.addEventListener("click", function() {
@@ -73,14 +104,71 @@ backDoor.addEventListener("click", function() {
     update(curr.reachableRooms[3]);
 });
 
+let selectedElement = false;
+let offset;
+
+function makeDraggable(evt) {
+    var svg = evt.target;
+    svg.addEventListener('mousedown', startDrag);
+    svg.addEventListener('mousemove', drag);
+    svg.addEventListener('mouseup', endDrag);
+    svg.addEventListener('mouseleave', endDrag);
+    function startDrag(evt) {
+        if (evt.target.classList.contains('draggable')) {
+            selectedElement = evt.target;
+            offset = getMousePosition(evt);
+            offset.x -= parseFloat(selectedElement.getAttributeNS(null, "x"));
+            offset.y -= parseFloat(selectedElement.getAttributeNS(null, "y"));
+        }
+    }
+    function getMousePosition(evt) {
+        var CTM = svg.getScreenCTM();
+        return {
+          x: (evt.clientX - CTM.e) / CTM.a,
+          y: (evt.clientY - CTM.f) / CTM.d
+        };
+      }
+    function drag(evt) {
+        if (selectedElement) {
+            evt.preventDefault();
+            var coord = getMousePosition(evt);
+            selectedElement.setAttributeNS(null, "x", coord.x - offset.x);
+            selectedElement.setAttributeNS(null, "y", coord.y - offset.y);
+        }
+    }
+    function endDrag(evt) {
+        selectedElement = false;
+    }
+  }
+
 function update(room) {
+    for (i = 0; i < allprops.length; i++) {
+        if (i >= room.props.length) {
+            allprops[i].setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                '');
+            allprops[i].setAttributeNS('', 'x', '0');
+            allprops[i].setAttributeNS('', 'y', '0');
+            allprops[i].setAttributeNS('', 'width', '0');
+            allprops[i].setAttributeNS('', 'height', '0');
+        } else {
+            allprops[i].setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                room.props[i].imgsrc);
+            allprops[i].setAttributeNS('', 'x', room.props[i].x);
+            allprops[i].setAttributeNS('', 'y', room.props[i].y);
+            allprops[i].setAttributeNS('', 'width', room.props[i].width);
+            allprops[i].setAttributeNS('', 'height', room.props[i].height);
+        }
+    }
     curr = room;
     currentRoom.setAttributeNS('', 'name', room.id);
     background.setAttributeNS(
         'http://www.w3.org/1999/xlink', 
         'xlink:href', 
         room.backgroundSrc);
-    currentRoom.name = room.id;
     
     if (room.reachableRooms[0].id != -1) {
         door0.setAttributeNS('', 'points', '400,880 773,1022 783,1960 419,2182');
@@ -142,47 +230,4 @@ function update(room) {
         door3.setAttributeNS('', 'width', '0');
         door3.setAttributeNS('', 'height', '0');
     }
-}
-
-elmnt = dragElement(document.getElementById("key"));
-
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown;
-  }
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
 }

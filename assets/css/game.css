@@ -50,6 +50,11 @@ body, html {
     animation: pop 3s ease; 
     border: 5px solid black;
 }
+  
+.draggable {
+  cursor: move;
+}
+
 
 @keyframes pop {
     0% {

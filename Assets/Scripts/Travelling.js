@@ -8,9 +8,11 @@ class RoomTemplate {
     }
 }
 
+//every prop has an identification number storing them in an array of ALL props
 class prop {
     constructor() {
         this.id = "unknown";
+        this.number = -1;
         this.imgsrc = "unknown";
         this.x = -1;
         this.y = -1;
@@ -18,6 +20,8 @@ class prop {
         this.width = -1; 
     }
 }
+
+let emptyProp = new prop();
 
 let emptyRoom = new RoomTemplate();
 emptyRoom.id = -1;
@@ -36,6 +40,7 @@ key.x = 727;
 key.y = 2178;
 key.width = 185;
 key.height = 169;
+key.number = 0;
 Room0.props = [key];
 
 let Room1 = new RoomTemplate();
@@ -73,7 +78,9 @@ let door2 = document.getElementById("door2");
 let backDoor = document.getElementById("backDoor");
 let currentRoom = document.getElementById("currentRoom");
 let background = document.getElementById("background");
-let allprops = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2")]
+let allprops = [key];
+//use propsInRoom to modify things in html document
+let propsInRoom = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2")]
 let room;
 let curr = Room0;
 //slots are spaces, items are the items (images etc)
@@ -89,8 +96,12 @@ let item2 = document.getElementById("item2");
 let item3 = document.getElementById("item3");
 let item4 = document.getElementById("item4");
 let item5 = document.getElementById("item5");
+let mouseIsOver = -1;
+let pocket = document.getElementById("inventory");
+let inventory = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
 
 update(Room0);
+
 firstDoor.addEventListener("click", function() {
     update(curr.reachableRooms[0]);
 });
@@ -106,6 +117,27 @@ backDoor.addEventListener("click", function() {
 
 let selectedElement = false;
 let offset;
+
+propsInRoom[0].addEventListener("mouseenter", function() {
+    mouseIsOver = 0;
+});
+propsInRoom[0].addEventListener("mouseleave", function() {
+    mouseIsOver = -1;
+});
+
+propsInRoom[1].addEventListener("mouseenter", function() {
+    mouseIsOver = 1;
+});
+propsInRoom[1].addEventListener("mouseleave", function() {
+    mouseIsOver = -1;
+});
+
+propsInRoom[2].addEventListener("mouseenter", function() {
+    mouseIsOver = 2;
+});
+propsInRoom[2].addEventListener("mouseleave", function() {
+    mouseIsOver = -1;
+});
 
 function makeDraggable(evt) {
     var svg = evt.target;
@@ -137,30 +169,102 @@ function makeDraggable(evt) {
         }
     }
     function endDrag(evt) {
+        var coord = getMousePosition(evt);
+        if (3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100) {
+            putInInventory(mouseIsOver);
+        }
         selectedElement = false;
     }
-  }
+}
 
-function update(room) {
-    for (i = 0; i < allprops.length; i++) {
-        if (i >= room.props.length) {
-            allprops[i].setAttributeNS(
+//putInInventory checks for which is the next open slot and adds it in to the first open slot
+function putInInventory(propId) {
+    for (i = 0; i < 6; i++) {
+        if (inventory[i].id == "unknown") {
+            inventory[i] = curr.props[propId];
+            switch (i) {
+                case 0:
+                    item0.setAttributeNS(
+                        'http://www.w3.org/1999/xlink', 
+                        'xlink:href', 
+                        curr.props[propId].imgsrc);
+                    break;
+                case 1:
+                    item1.setAttributeNS(
+                        'http://www.w3.org/1999/xlink', 
+                        'xlink:href', 
+                        curr.props[propId].imgsrc);
+                    break;
+                case 2:
+                    item2.setAttributeNS(
+                        'http://www.w3.org/1999/xlink', 
+                        'xlink:href', 
+                        curr.props[propId].imgsrc);
+                    break;
+                case 3:
+                    item3.setAttributeNS(
+                        'http://www.w3.org/1999/xlink', 
+                        'xlink:href', 
+                        curr.props[propId].imgsrc);
+                    break;
+                case 4:
+                    item4.setAttributeNS(
+                        'http://www.w3.org/1999/xlink', 
+                        'xlink:href', 
+                        curr.props[propId].imgsrc);
+                    break;
+                case 5:
+                    item5.setAttributeNS(
+                        'http://www.w3.org/1999/xlink', 
+                        'xlink:href', 
+                        curr.props[propId].imgsrc);
+                    break;
+            }
+            propsInRoom[propId].setAttributeNS(
                 'http://www.w3.org/1999/xlink', 
                 'xlink:href', 
                 '');
-            allprops[i].setAttributeNS('', 'x', '0');
-            allprops[i].setAttributeNS('', 'y', '0');
-            allprops[i].setAttributeNS('', 'width', '0');
-            allprops[i].setAttributeNS('', 'height', '0');
+            propsInRoom[propId].setAttributeNS(
+                '', 
+                'x', 
+                0);
+            propsInRoom[propId].setAttributeNS(
+                '', 
+                'y', 
+                0);
+            propsInRoom[propId].setAttributeNS(
+                '', 
+                'width', 
+                0);
+            propsInRoom[propId].setAttributeNS(
+                '', 
+                'height', 
+                0);
+            break;
+        }
+    }
+}
+
+function update(room) {
+    for (i = 0; i < propsInRoom.length; i++) {
+        if (i >= room.props.length) {
+            propsInRoom[i].setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                '');
+            propsInRoom[i].setAttributeNS('', 'x', '0');
+            propsInRoom[i].setAttributeNS('', 'y', '0');
+            propsInRoom[i].setAttributeNS('', 'width', '0');
+            propsInRoom[i].setAttributeNS('', 'height', '0');
         } else {
-            allprops[i].setAttributeNS(
+            propsInRoom[i].setAttributeNS(
                 'http://www.w3.org/1999/xlink', 
                 'xlink:href', 
                 room.props[i].imgsrc);
-            allprops[i].setAttributeNS('', 'x', room.props[i].x);
-            allprops[i].setAttributeNS('', 'y', room.props[i].y);
-            allprops[i].setAttributeNS('', 'width', room.props[i].width);
-            allprops[i].setAttributeNS('', 'height', room.props[i].height);
+            propsInRoom[i].setAttributeNS('', 'x', room.props[i].x);
+            propsInRoom[i].setAttributeNS('', 'y', room.props[i].y);
+            propsInRoom[i].setAttributeNS('', 'width', room.props[i].width);
+            propsInRoom[i].setAttributeNS('', 'height', room.props[i].height);
         }
     }
     curr = room;

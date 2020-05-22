@@ -17,7 +17,10 @@ class prop {
         this.x = -1;
         this.y = -1;
         this.height = -1;
-        this.width = -1; 
+        this.width = -1;
+        function toLocalString() {
+            return this.id;
+        }
     }
 }
 
@@ -46,8 +49,7 @@ Room0.props = [key];
 let Room1 = new RoomTemplate();
 Room1.id = 1;
 Room1.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room1.props = [];
-Room1.itemCoordinates = [];
+Room1.props = [key];
 
 let Room2 = new RoomTemplate();
 Room2.id = 2;
@@ -118,6 +120,7 @@ backDoor.addEventListener("click", function() {
 let selectedElement = false;
 let offset;
 
+//detecting which prop is being dragged into the inventory
 propsInRoom[0].addEventListener("mouseenter", function() {
     mouseIsOver = 0;
 });
@@ -138,6 +141,11 @@ propsInRoom[2].addEventListener("mouseenter", function() {
 propsInRoom[2].addEventListener("mouseleave", function() {
     mouseIsOver = -1;
 });
+
+
+let newPropSlot;
+//tracking which object in the inventory is being selected
+slot0.addEventListener("click", removeFromInventory(0));
 
 function makeDraggable(evt) {
     var svg = evt.target;
@@ -170,10 +178,84 @@ function makeDraggable(evt) {
     }
     function endDrag(evt) {
         var coord = getMousePosition(evt);
-        if (3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100) {
+        if (3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && mouseIsOver != -1) {
             putInInventory(mouseIsOver);
         }
         selectedElement = false;
+    }
+}
+
+function setInventoryPic(i, address) {
+    switch (i) {
+        case 0:
+            item0.setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                address);
+            break;
+        case 1:
+            item1.setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                address);
+            break;
+        case 2:
+            item2.setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                address);
+            break;
+        case 3:
+            item3.setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                address);
+            break;
+        case 4:
+            item4.setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                address);
+            break;
+        case 5:
+            item5.setAttributeNS(
+                'http://www.w3.org/1999/xlink', 
+                'xlink:href', 
+                address);
+            break;
+    }
+}
+
+function removeFromInventory(inventorySlot) {
+    if (inventory[inventorySlot] != emptyProp) {
+        for (i = 0; i < 3; i++) {
+            if (curr.props[i] == null) {
+                newPropSlot = i;
+                break;
+            }
+        }
+        propsInRoom[newPropSlot].setAttributeNS(
+            'http://www.w3.org/1999/xlink', 
+            'xlink:href', 
+            inventory[inventorySlot].imgsrc);
+        propsInRoom[newPropSlot].setAttributeNS(
+            '', 
+            'x', 
+            inventory[inventorySlot].x);
+        propsInRoom[newPropSlot].setAttributeNS(
+            '', 
+            'y', 
+            inventory[inventorySlot].y);
+        propsInRoom[newPropSlot].setAttributeNS(
+            '', 
+            'height', 
+            inventory[inventorySlot].height);
+        propsInRoom[newPropSlot].setAttributeNS(
+            '', 
+            'width', 
+            inventory[inventorySlot].width);
+        inventory[inventorySlot] = emptyProp;
+        setInventoryPic(inventorySlot, '');
     }
 }
 
@@ -182,44 +264,7 @@ function putInInventory(propId) {
     for (i = 0; i < 6; i++) {
         if (inventory[i].id == "unknown") {
             inventory[i] = curr.props[propId];
-            switch (i) {
-                case 0:
-                    item0.setAttributeNS(
-                        'http://www.w3.org/1999/xlink', 
-                        'xlink:href', 
-                        curr.props[propId].imgsrc);
-                    break;
-                case 1:
-                    item1.setAttributeNS(
-                        'http://www.w3.org/1999/xlink', 
-                        'xlink:href', 
-                        curr.props[propId].imgsrc);
-                    break;
-                case 2:
-                    item2.setAttributeNS(
-                        'http://www.w3.org/1999/xlink', 
-                        'xlink:href', 
-                        curr.props[propId].imgsrc);
-                    break;
-                case 3:
-                    item3.setAttributeNS(
-                        'http://www.w3.org/1999/xlink', 
-                        'xlink:href', 
-                        curr.props[propId].imgsrc);
-                    break;
-                case 4:
-                    item4.setAttributeNS(
-                        'http://www.w3.org/1999/xlink', 
-                        'xlink:href', 
-                        curr.props[propId].imgsrc);
-                    break;
-                case 5:
-                    item5.setAttributeNS(
-                        'http://www.w3.org/1999/xlink', 
-                        'xlink:href', 
-                        curr.props[propId].imgsrc);
-                    break;
-            }
+            setInventoryPic(i, curr.props[propId].imgsrc)
             propsInRoom[propId].setAttributeNS(
                 'http://www.w3.org/1999/xlink', 
                 'xlink:href', 
@@ -239,11 +284,14 @@ function putInInventory(propId) {
             propsInRoom[propId].setAttributeNS(
                 '', 
                 'height', 
-                0);
+               0);
             break;
         }
     }
+    curr.props[propId] = emptyProp;
+    pocket.setAttributeNS('', 'name', inventory.toLocaleString);
 }
+
 
 function update(room) {
     for (i = 0; i < propsInRoom.length; i++) {

@@ -46,18 +46,16 @@ Room0.props = [key];
 let Room1 = new RoomTemplate();
 Room1.id = 1;
 Room1.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room1.props = [key];
+Room1.props = [key, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
 
 let Room2 = new RoomTemplate();
 Room2.id = 2;
 Room2.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room2.props = [];
 Room2.itemCoordinates = [];
 
 let Room3 = new RoomTemplate();
 Room3.id = 3;
 Room3.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room3.props = [];
 Room3.itemCoordinates = [];
 
 Room0.reachableRooms = [emptyRoom, Room1, emptyRoom, emptyRoom];

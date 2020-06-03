@@ -3,7 +3,6 @@ class RoomTemplate {
         this.id = "unknown";
         this.backgroundSrc = "unknown";
         this.props = [];
-        this.itemCoordinates = [];
         this.reachableRooms = [];
     }
 }
@@ -30,12 +29,12 @@ let emptyRoom = new RoomTemplate();
 emptyRoom.id = -1;
 emptyRoom.backgroundSrc = "";
 emptyRoom.props = [];
-emptyRoom.itemCoordinates = [];
 emptyRoom.reachableRooms = [];
 
 let Room0 = new RoomTemplate();
 Room0.id = 0;
 Room0.backgroundSrc = "assets/images/Rooms/OneDoorBackground.svg";
+
 let key = new prop();
 key.id = "key";
 key.imgsrc = "assets/images/key.svg";
@@ -55,13 +54,11 @@ let Room2 = new RoomTemplate();
 Room2.id = 2;
 Room2.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
 Room2.props = [];
-Room2.itemCoordinates = [];
 
 let Room3 = new RoomTemplate();
 Room3.id = 3;
 Room3.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
 Room3.props = [];
-Room3.itemCoordinates = [];
 
 Room0.reachableRooms = [emptyRoom, Room1, emptyRoom, emptyRoom];
 Room1.reachableRooms = [Room3, emptyRoom, Room2, Room0];
@@ -80,12 +77,13 @@ let door2 = document.getElementById("door2");
 let backDoor = document.getElementById("backDoor");
 let currentRoom = document.getElementById("currentRoom");
 let background = document.getElementById("background");
+
 let allprops = [key];
 //use propsInRoom to modify things in html document
 let propsInRoom = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2")]
 let room;
 let curr = Room0;
-//slots are spaces, items are the items (images etc)
+//slots are spaces, items are the items (images) in inventory
 let slot0 = document.getElementById("slot0");
 let slot1 = document.getElementById("slot1");
 let slot2 = document.getElementById("slot2");
@@ -98,7 +96,7 @@ let item2 = document.getElementById("item2");
 let item3 = document.getElementById("item3");
 let item4 = document.getElementById("item4");
 let item5 = document.getElementById("item5");
-let mouseIsOver = -1;
+let mouseIsOver = -1; // prop id of what your mouse is over in the room
 let pocket = document.getElementById("inventory");
 let inventory = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
 

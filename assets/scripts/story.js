@@ -1,7 +1,6 @@
 $(document).ready(function(){
     $("body").fadeIn(2000);
 
-    /*
     $("#text1").delay(1000).fadeIn(1000);
     
     $('#ct1').click(function(){
@@ -31,9 +30,8 @@ $(document).ready(function(){
         $(".key").show(0);
         $("#text4").delay(1000).fadeIn(500);
     })
-    */
 
-    $("#text4").fadeIn(500);
+    // $("#text4").fadeIn(500);
     
     $("#ct3").click(function() {
         $("#text4").fadeOut(500, function() {

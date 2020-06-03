@@ -19,7 +19,6 @@ class RoomTemplate {
         this.id = "unknown";
         this.backgroundSrc = "unknown";
         this.props = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
-        this.itemCoordinates = [];
         this.reachableRooms = [];
     }
 }
@@ -27,7 +26,6 @@ let emptyRoom = new RoomTemplate();
 emptyRoom.id = -1;
 emptyRoom.backgroundSrc = "";
 emptyRoom.props = [];
-emptyRoom.itemCoordinates = [];
 emptyRoom.reachableRooms = [];
 
 let Room0 = new RoomTemplate();

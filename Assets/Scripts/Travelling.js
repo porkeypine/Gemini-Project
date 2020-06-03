@@ -12,19 +12,25 @@ class prop {
     constructor() {
         this.id = "unknown";
         this.number = -1;
-        this.imgsrc = "unknown";
-        this.x = -1;
-        this.y = -1;
-        this.height = -1;
-        this.width = -1;
-        function toLocalString() {
-            return this.id;
-        }
+        this.imgsrc = "";
+        this.x = 0;
+        this.y = 0;
+        this.height = 0;
+        this.width = 0;
     }
 }
-
 let emptyProp = new prop();
+emptyProp.id = "unknown";
+emptyProp.number = -1;
 
+class RoomTemplate {
+    constructor() {
+        this.id = "unknown";
+        this.backgroundSrc = "unknown";
+        this.props = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
+        this.reachableRooms = [];
+    }
+}
 let emptyRoom = new RoomTemplate();
 emptyRoom.id = -1;
 emptyRoom.backgroundSrc = "";
@@ -48,7 +54,7 @@ Room0.props = [key];
 let Room1 = new RoomTemplate();
 Room1.id = 1;
 Room1.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room1.props = [key];
+Room1.props = [key, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
 
 let Room2 = new RoomTemplate();
 Room2.id = 2;
@@ -80,7 +86,7 @@ let background = document.getElementById("background");
 
 let allprops = [key];
 //use propsInRoom to modify things in html document
-let propsInRoom = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2")]
+let propsInRoom = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2"), document.getElementById("prop3"), document.getElementById("prop4"), document.getElementById("prop5")];
 let room;
 let curr = Room0;
 //slots are spaces, items are the items (images) in inventory
@@ -99,6 +105,8 @@ let item5 = document.getElementById("item5");
 let mouseIsOver = -1; // prop id of what your mouse is over in the room
 let pocket = document.getElementById("inventory");
 let inventory = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
+let items = [item0, item1, item2, item3, item4, item5];
+let inventorySlot = -1;
 
 update(Room0);
 
@@ -140,10 +148,52 @@ propsInRoom[2].addEventListener("mouseleave", function() {
     mouseIsOver = -1;
 });
 
+//detecting which inventory slot is being clicked
+slot0.addEventListener("mouseenter", function() {
+    inventorySlot = 0;
+});
+slot0.addEventListener("mouseleave", function() {
+    inventorySlot = -1;
+});
+slot1.addEventListener("mouseenter", function() {
+    inventorySlot = 1;
+});
+slot1.addEventListener("mouseleave", function() {
+    inventorySlot = -1;
+});
+slot2.addEventListener("mouseenter", function() {
+    inventorySlot = 2;
+});
+slot2.addEventListener("mouseleave", function() {
+    inventorySlot = -1;
+});
+slot3.addEventListener("mouseenter", function() {
+    inventorySlot = 3;
+});
+slot3.addEventListener("mouseleave", function() {
+    inventorySlot = -1;
+});
+slot4.addEventListener("mouseenter", function() {
+    inventorySlot = 4;
+});
+slot4.addEventListener("mouseleave", function() {
+    inventorySlot = -1;
+});
+slot5.addEventListener("mouseenter", function() {
+    inventorySlot = 5;
+});
+slot5.addEventListener("mouseleave", function() {
+    inventorySlot = -1;
+});
 
 let newPropSlot;
 //tracking which object in the inventory is being selected
-slot0.addEventListener("click", removeFromInventory(0));
+slot0.addEventListener("click", removeFromInventory);
+slot1.addEventListener("click", removeFromInventory);
+slot2.addEventListener("click", removeFromInventory);
+slot3.addEventListener("click", removeFromInventory);
+slot4.addEventListener("click", removeFromInventory);
+slot5.addEventListener("click", removeFromInventory);
 
 function makeDraggable(evt) {
     var svg = evt.target;
@@ -224,43 +274,48 @@ function setInventoryPic(i, address) {
     }
 }
 
-function removeFromInventory(inventorySlot) {
-    if (inventory[inventorySlot] != emptyProp) {
-        for (i = 0; i < 3; i++) {
-            if (curr.props[i] == null) {
-                newPropSlot = i;
-                break;
-            }
-        }
-        propsInRoom[newPropSlot].setAttributeNS(
+function removeFromInventory() {
+    if (inventorySlot != -1 && inventory[inventorySlot].number != -1) {
+        let x = nextEmptyPropInRoom();
+        propsInRoom[x].setAttributeNS(
             'http://www.w3.org/1999/xlink', 
             'xlink:href', 
             inventory[inventorySlot].imgsrc);
-        propsInRoom[newPropSlot].setAttributeNS(
+        propsInRoom[x].setAttributeNS(
             '', 
             'x', 
-            inventory[inventorySlot].x);
-        propsInRoom[newPropSlot].setAttributeNS(
+            items[inventorySlot].getAttributeNS('', 'x'));
+        propsInRoom[x].setAttributeNS(
             '', 
             'y', 
-            inventory[inventorySlot].y);
-        propsInRoom[newPropSlot].setAttributeNS(
+            items[inventorySlot].getAttributeNS('', 'y'));
+        propsInRoom[x].setAttributeNS(
             '', 
             'height', 
             inventory[inventorySlot].height);
-        propsInRoom[newPropSlot].setAttributeNS(
+        propsInRoom[x].setAttributeNS(
             '', 
             'width', 
-            inventory[inventorySlot].width);
+            inventory[inventorySlot].width);            
+        curr.props[nextEmptyPropInRoom()] = inventory[inventorySlot];
         inventory[inventorySlot] = emptyProp;
         setInventoryPic(inventorySlot, '');
+    }
+}
+
+//use when checking which prop in inventory is available
+function nextEmptyPropInRoom() {
+    for (i = 0; i < curr.props.length; i++) {
+        if (curr.props[i].number == -1) {
+            return i;
+        }
     }
 }
 
 //putInInventory checks for which is the next open slot and adds it in to the first open slot
 function putInInventory(propId) {
     for (i = 0; i < 6; i++) {
-        if (inventory[i].id == "unknown") {
+        if (inventory[i].number == -1) {
             inventory[i] = curr.props[propId];
             setInventoryPic(i, curr.props[propId].imgsrc)
             propsInRoom[propId].setAttributeNS(
@@ -287,7 +342,6 @@ function putInInventory(propId) {
         }
     }
     curr.props[propId] = emptyProp;
-    pocket.setAttributeNS('', 'name', inventory.toLocaleString);
 }
 
 

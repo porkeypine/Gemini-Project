@@ -14,52 +14,16 @@ let emptyProp = new prop();
 emptyProp.id = "unknown";
 emptyProp.number = -1;
 
-class RoomTemplate {
+class Door {
     constructor() {
-        this.id = "unknown";
-        this.backgroundSrc = "unknown";
-        this.props = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
-        this.reachableRooms = [];
+        //this is p self explanatory
+        this.locked = false;
+        //name is to be replaced with firstDoor, etc
+        this.door = "";
+        //only important for checking whether the door is present in the room at all
+        this.hasDestination = true;
     }
 }
-let emptyRoom = new RoomTemplate();
-emptyRoom.id = -1;
-emptyRoom.backgroundSrc = "";
-emptyRoom.props = [];
-emptyRoom.reachableRooms = [];
-
-let Room0 = new RoomTemplate();
-Room0.id = 0;
-Room0.backgroundSrc = "assets/images/Rooms/OneDoorBackground.svg";
-let key = new prop();
-key.id = "key";
-key.imgsrc = "assets/images/key.svg";
-key.x = 727;
-key.y = 2178;
-key.width = 185;
-key.height = 169;
-key.number = 0;
-Room0.props = [key];
-
-let Room1 = new RoomTemplate();
-Room1.id = 1;
-Room1.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room1.props = [key, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
-
-let Room2 = new RoomTemplate();
-Room2.id = 2;
-Room2.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room2.itemCoordinates = [];
-
-let Room3 = new RoomTemplate();
-Room3.id = 3;
-Room3.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
-Room3.itemCoordinates = [];
-
-Room0.reachableRooms = [emptyRoom, Room1, emptyRoom, emptyRoom];
-Room1.reachableRooms = [Room3, emptyRoom, Room2, Room0];
-Room2.reachableRooms = [emptyRoom, Room0, emptyRoom, Room1];
-Room3.reachableRooms = [Room1, Room0, emptyRoom, Room0];
 
 let firstDoor = document.getElementById("firstDoor");
 let firstDoorAjar = document.getElementById("firstDoorAjar");
@@ -73,7 +37,99 @@ let door2 = document.getElementById("door2");
 let backDoor = document.getElementById("backDoor");
 let currentRoom = document.getElementById("currentRoom");
 let background = document.getElementById("background");
-let allprops = [key];
+
+let openDoor0 = new Door();
+openDoor0.door = firstDoor;
+let openDoor1 = new Door();
+openDoor1.door = secondDoor;
+let openDoor2 = new Door();
+openDoor2.door = thirdDoor;
+
+let lockedDoor0 = new Door();
+lockedDoor0.door = firstDoor;
+lockedDoor0.locked = true;
+let lockedDoor1 = new Door();
+lockedDoor1.door = secondDoor;
+lockedDoor1.locked = true;
+let lockedDoor2 = new Door(); 
+lockedDoor2.door = thirdDoor;
+lockedDoor2.locked = true;
+
+let emptyDoor0 = new Door();
+emptyDoor0.door = firstDoor;
+emptyDoor0.hasDestination = false;
+let emptyDoor1 = new Door();
+emptyDoor1.door = secondDoor;
+emptyDoor1.hasDestination = false;
+let emptyDoor2 = new Door();
+emptyDoor2.door = thirdDoor;
+emptyDoor2.hasDestination = false;
+
+//unlockCondition[0] carries the prop number of what unlocks door 0 of the current room
+class RoomTemplate {
+    constructor() {
+        this.id = "unknown";
+        this.backgroundSrc = "unknown";
+        this.props = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
+        this.reachableRooms = [];
+        this.doors = [emptyDoor0, emptyDoor1, emptyDoor2];
+        this.unlockCondition = [-1, -1, -1];
+    }
+}
+let emptyRoom = new RoomTemplate();
+emptyRoom.id = -1;
+emptyRoom.backgroundSrc = "";
+emptyRoom.props = [];
+emptyRoom.reachableRooms = [];
+
+let Room0 = new RoomTemplate();
+Room0.id = 0;
+Room0.backgroundSrc = "assets/images/Rooms/OneDoorBackground.svg";
+let key1 = new prop();
+key1.id = "key 1";
+key1.imgsrc = "assets/images/key.svg";
+key1.x = 727;
+key1.y = 2178;
+key1.width = 185;
+key1.height = 169;
+key1.number = 0;
+Room0.props = [key1, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
+
+let Room1 = new RoomTemplate();
+Room1.id = 1;
+Room1.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
+let key2 = new prop();
+key2.id = "key 2";
+key2.x = 727;
+key2.y = 2178;
+key2.width = 185;
+key2.height = 169;
+key2.number = 1;
+Room1.props = [key2, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
+
+let Room2 = new RoomTemplate();
+Room2.id = 2;
+Room2.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
+
+let Room3 = new RoomTemplate();
+Room3.id = 3;
+Room3.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
+
+Room0.reachableRooms = [emptyRoom, Room1, emptyRoom, emptyRoom];
+Room0.doors = [emptyDoor0, openDoor1, emptyDoor2];
+Room1.reachableRooms = [Room3, Room2, emptyRoom, Room0];
+Room1.doors = [openDoor0, lockedDoor1, emptyDoor2];
+Room1.unlockCondition[1] = 1
+Room2.reachableRooms = [emptyRoom, Room0, emptyRoom, Room1];
+Room2.doors = [openDoor0, openDoor1, openDoor2];
+Room3.reachableRooms = [Room1, Room0, emptyRoom, Room2];
+Room3.doors = [openDoor0, openDoor1, openDoor2];
+
+let openDoors = [openDoor0, openDoor1, openDoor2];
+let lockedDoors = [lockedDoor0, lockedDoor1, lockedDoor2];
+
+//index of prop is its number, ie key1.number = 0
+let allprops = [key1, key2];
 //use propsInRoom to modify things in html document
 let propsInRoom = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2"), document.getElementById("prop3"), document.getElementById("prop4"), document.getElementById("prop5")];
 let room;
@@ -99,15 +155,24 @@ let inventorySlot = -1;
 
 update(Room0);
 
-firstDoor.addEventListener("click", function() {
-    update(curr.reachableRooms[0]);
-});
-secondDoor.addEventListener("click", function() {
-    update(curr.reachableRooms[1]);
-});
-thirdDoor.addEventListener("click", function() {
-    update(curr.reachableRooms[2]);
-});
+if (!curr.doors[0].locked) {
+    firstDoor.addEventListener("click", function() {
+        update(curr.reachableRooms[0]);
+    });
+}
+
+if (!curr.doors[1].locked) {
+    secondDoor.addEventListener("click", function() {
+        update(curr.reachableRooms[1]);
+    });
+}
+
+if (!curr.doors[2].locked) {
+    thirdDoor.addEventListener("click", function() {
+        update(curr.reachableRooms[2]);
+    });
+}
+
 backDoor.addEventListener("click", function() {
     update(curr.reachableRooms[3]);
 });
@@ -218,10 +283,26 @@ function makeDraggable(evt) {
         if (3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && mouseIsOver != -1) {
             putInInventory(mouseIsOver);
         }
+        //if mouse is over door0, check if its carrying the right prop to unlock 
+        else if (curr.doors[0].locked && 400 < coord.x && coord.x < 780 && 880 < coord.y && coord.y < 1960 
+            && propsInRoom[mouseIsOver] == curr.unlockCondition[0]) {
+            unlock(0);
+        }
+        //if mouse is over door1, check if its carrying the right prop to unlock
+        else if (curr.doors[1].locked && 1773 < coord.x && coord.x < 2341 && 1026 < coord.y && coord.y < 2341 
+            && propsInRoom[mouseIsOver].number == curr.unlockCondition[1].number) {
+            unlock(1);
+        }
+        //if mouse is over door2, check if its carrying the right prop to unlock
+        else if (curr.doors[2].locked && 2900 < coord.x && coord.x < 3400 && 880 < coord.y && coord.y < 3400 
+            && propsInRoom[mouseIsOver] == curr.unlockCondition[2]) {
+            unlock(2);
+        }
         selectedElement = false;
     }
 }
 
+//FUNCTIONS FOR INVENTORY
 function setInventoryPic(i, address) {
     switch (i) {
         case 0:
@@ -332,8 +413,9 @@ function putInInventory(propId) {
     }
     curr.props[propId] = emptyProp;
 }
+//FUNCTIONS FOR INVENTORY END
 
-
+//FUNCTIONS FOR TRAVELLING
 function update(room) {
     for (i = 0; i < propsInRoom.length; i++) {
         if (i >= room.props.length) {
@@ -363,7 +445,7 @@ function update(room) {
         'xlink:href', 
         room.backgroundSrc);
     
-    if (room.reachableRooms[0].id != -1) {
+    if (room.reachableRooms[0].id != -1 && !curr.doors[0].locked) {
         door0.setAttributeNS('', 'points', '400,880 773,1022 783,1960 419,2182');
         firstDoor.addEventListener("mouseover", function() {
             firstDoorAjar.setAttributeNS('', 'class', '');
@@ -377,7 +459,7 @@ function update(room) {
         door0.setAttributeNS('', 'points', '');
     }
 
-    if (room.reachableRooms[1].id != -1) {
+    if (room.reachableRooms[1].id != -1 && !curr.doors[1].locked) {
         door1.setAttributeNS('', 'x', '1773');
         door1.setAttributeNS('', 'y', '1026');
         door1.setAttributeNS('', 'width', '568');
@@ -397,7 +479,7 @@ function update(room) {
         door1.setAttributeNS('', 'height', '0');
     }
 
-    if (room.reachableRooms[2].id != -1) {
+    if (room.reachableRooms[2].id != -1 && !curr.doors[2].locked) {
         door2.setAttributeNS('', 'points', '2591,980 3423,766 3411,2434 2953,2108');
         thirdDoor.addEventListener("mouseover", function() {
             thirdDoorAjar.setAttributeNS('', 'class', '');
@@ -424,3 +506,9 @@ function update(room) {
         door3.setAttributeNS('', 'height', '0');
     }
 }
+
+function unlock(doornum) {
+    curr.doors[doornum] = openDoors[doornum];
+    update(curr);
+}
+//FUNCTIONS FOR TRAVELLING END

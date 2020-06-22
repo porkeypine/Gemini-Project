@@ -1,3 +1,12 @@
+class RoomTemplate {
+    constructor() {
+        this.id = "unknown";
+        this.backgroundSrc = "unknown";
+        this.props = [];
+        this.reachableRooms = [];
+    }
+}
+
 //every prop has an identification number storing them in an array of ALL props
 class prop {
     constructor() {
@@ -134,7 +143,7 @@ let allprops = [key1, key2];
 let propsInRoom = [document.getElementById("prop0"), document.getElementById("prop1"), document.getElementById("prop2"), document.getElementById("prop3"), document.getElementById("prop4"), document.getElementById("prop5")];
 let room;
 let curr = Room0;
-//slots are spaces, items are the items (images etc)
+//slots are spaces, items are the items (images) in inventory
 let slot0 = document.getElementById("slot0");
 let slot1 = document.getElementById("slot1");
 let slot2 = document.getElementById("slot2");
@@ -147,7 +156,7 @@ let item2 = document.getElementById("item2");
 let item3 = document.getElementById("item3");
 let item4 = document.getElementById("item4");
 let item5 = document.getElementById("item5");
-let mouseIsOver = -1;
+let mouseIsOver = -1; // prop id of what your mouse is over in the room
 let pocket = document.getElementById("inventory");
 let inventory = [emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp];
 let items = [item0, item1, item2, item3, item4, item5];

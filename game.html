@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gemini Project</title>
     <link rel="stylesheet" href="./assets/css/game.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <svg id = "currentRoom" name = "0" width="100%" height="100%" viewBox="0 0 4140 2480" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" onload = makeDraggable(evt)>
+    <svg id = "currentRoom" name = "def" width="100%" height="100%" viewBox="0 0 4140 2480" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" onload = makeDraggable(evt)>
         <image id = "background" width = "3508" height = "2481" xlink:href = ""></image>
         <!--LeftDoor (door0)-->
         <image id = "firstDoorAjar" width = "3508" height = "2481" class = hide fill-opacity = "1" xlink:href = "assets/images/Rooms/LeftDoorAjar.svg"></image> 
@@ -32,8 +33,8 @@
         </a>
         <!--Inventory-->
         <image id = "inventory" name = '' width = 341.394 height = 1902.568 x = 3681.984 y = 288.867 xlink:href = "assets/images/inventory.svg"></image>
-        <a id = "slot0" href = #>
-        <image id="item0" xlink:href="" x="3710" y="320" width="280" height="280"></image>
+        <a id = "slot0" href = # slot = '0'>
+            <!-- <image id="item0" xlink:href="" x="3710" y="320" width="280" height="280"></image> -->
         </a>
         <a id = "slot1" href = #>
             <image id="item1" xlink:href="" x="3710" y="625" width="280" height="280"></image>
@@ -57,14 +58,61 @@
             <image id = prop3 xlink:href="" class = draggable x="0" y="0" width="0" height="0"></image>
             <image id = prop4 xlink:href="" class = draggable x="0" y="0" width="0" height="0"></image>
             <image id = prop5 xlink:href="" class = draggable x="0" y="0" width="0" height="0"></image>
+
     </svg>
+
+
+    <div id="text1" class="Room0 textContainer hide" style="top: 3%">
+        <p class="text">
+            You open your eyes slowly, groggy with sleep. 
+            <br>You're sitting on the floor in an empty, sterile room.
+            <br>There is a single, unmarked door on the opposite wall. 
+            <br>Except for the brass door knob, everything is eerily white.
+        </p>
+        <p class="clickText" id="ct1">
+            Get up.
+        </p>
+    </div>
+    <div id="text2" class="Room0 textContainer hide" style="top: 30%">
+        <p class="text">
+            You stand up, blood rushing dizzily away from your head.
+            <br>Spots dance in your vision for a moment. 
+            <br>You have to lean back against the wall until you're steady. 
+            <br>The door is unlocked.
+        </p>
+    </div>
+    <div id="text3" class="Room0 textContainer hide" style="top: 78%">
+        <p class="text">
+            The door is unlocked.
+        </p>
+        <p class="clickText" id="ct2">
+            Open the door.
+        </p>
+    </div>
+    <div id="text4" class="Room1 textContainer hide" style="top: 28%">
+        <p class="text">
+            You enter the next room and the door shuts behind you.
+            <br>This room is exactly the same as the previous one, 
+            <br>but there is a key on the floor.
+        </p>
+        <p class="clickText" id="ct3">
+            Try the door behind you.
+        </p>
+    </div>
+    <div id="text5" class="Room1 textContainer hide" style="top: 55%; left: 42%">
+        <p class="text">
+            It won't open.
+        </p>
+    </div>
+    <div id="text6" class="Room1 textContainer hide" style="top: 86%; left: 43%">
+        <p class="text">
+            You have picked up the key.
+        </p>
+    </div>
+
     
+    <script src = "assets/scripts/story.js"></script>
+    <script src = "assets/scripts/Trying.js"></script>
 
-    <script src = "assets/scripts/travelling.js"></script>
-
-    <!--Bootstrap for JS
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="./assets/scripts/index.js"></script>
-    -->
 </body>
 </html>

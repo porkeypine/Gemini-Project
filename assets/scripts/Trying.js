@@ -138,6 +138,7 @@ function makeDraggable(evt) {
     svg.addEventListener('mousemove', drag);
     svg.addEventListener('mouseup', endDrag);
     svg.addEventListener('mouseleave', endDrag);
+    svg.addEventListener('contextmenu', removeFromInventory(), false);
     function startDrag(evt) {
         if (evt.target.classList.contains('draggable')) {
             selectedElement = evt.target;
@@ -243,18 +244,19 @@ function updateInventory() {
 }
 
 // removing objects in the inventory 
-slot0.addEventListener("dblclick", removeFromInventory());
+slot0.addEventListener("contextmenu", removeFromInventory(0), false);
 slot1.addEventListener("click", removeFromInventory());
 slot2.addEventListener("click", removeFromInventory());
 slot3.addEventListener("click", removeFromInventory());
 slot4.addEventListener("click", removeFromInventory());
 slot5.addEventListener("click", removeFromInventory());
 
-function removeFromInventory(slot) {
+function removeFromInventory() {
     console.log('remove slot ' + slot);
-    var item = this['slot' + slot].firstElementChild;
-    delete inventory[item.id];
-    item.remove();   
+    var item = this['slot' + 0].firstElementChild;
+    delete inventory[item.name];
+    item.remove();
+    return false;
 }
 
 //FUNCTIONS FOR TRAVELLING

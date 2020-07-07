@@ -84,7 +84,7 @@ body, html {
 
 .text {
     font-family: 'Lucida Sans';
-    font-size: 0.9rem;
+    /* font-size: 0.9rem; */
     margin: 0px;
     padding: 1px;
     padding-left: 3px;

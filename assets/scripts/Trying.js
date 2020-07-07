@@ -1,55 +1,4 @@
-// INITIALISATION: CLASS AND CONSTANT VARIABLE DECLARATIONS
-
-class Room {
-    constructor(id = "-1", backgroundSrc = "", text = [], doors = [], props = {}) {
-        this.id = id;
-        this.backgroundSrc = backgroundSrc;
-        this.text = text;
-        // listed in the order of left, centre, right, back
-        this.reachableRooms = []; 
-        // iff there's a reachable room for left/centre/right, there will be doors listed in order of left/centre/right
-        this.doors = doors;
-        this.props = props;
-    }
-}
-
-class Door {
-    constructor(location = "", locked = false, unlockCondition = "") {
-        this.location = location; // "left", "centre", "right"
-        this.locked = locked;
-        this.unlockCondition = unlockCondition; // format: name of item or some numerical combination like "28304"; consider using arrow functions instead?
-    }
-}
-
-class Text {
-    constructor(text = "", order = 0, clickable = false) {
-        this.text = text;
-        this.order = order; // order to display in the 
-        this.clickable = clickable;
-    }
-}
-
-class Prop {
-    constructor(name = "unknown", img = "", inspect_img = "", x = 0, y = 0, height = 0, width = 0) {
-        this.name = name;
-        this.img = img;
-        this.inspect_img = inspect_img;
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-    }
-}
-
-var inventory = {};
-
-// STANDARD STUFF (CONSTANTS)
-  
-var std_bg = "assets/Images/Rooms/ThreeDoorRoomBackground.svg";
-
-let leftUnlocked = new Door("left");
-let centreUnlocked = new Door("centre");
-let rightUnlocked = new Door("right");
+// document.writeln("<script type='text/javascript' src='assets/scripts/classes.js'></script>");
 
 
 // FROM HTML 
@@ -84,55 +33,17 @@ let item5 = document.getElementById("item5");
 let pocket = document.getElementById("inventory");
 
 
-// DEFINING ROOMS
-
-let Room0 = new Room(0, "assets/Images/Rooms/OneDoorBackground.svg", document.getElementsByClassName("Room0"), ["", centreUnlocked, ""]);
-// room: id, backgroundSrc, text, doors, props
-let lockedKeyDoor = new Door("right", true, "key 1")
-let key1 = new Prop("key 1", "assets/Images/Key.svg", "assets/images/key.svg", 727, 2178, 185, 169);
-// prop: name, img, inspect_img, x, y, w, h
-let Room1 = new Room(1, std_bg, document.getElementsByClassName("Room1"), [leftUnlocked, centreUnlocked, lockedKeyDoor], {"key 1": key1});
-let Room2 = new Room(2, std_bg, [], [leftUnlocked, centreUnlocked, rightUnlocked]);
-let Room3 = new Room(3, std_bg, [], [leftUnlocked, centreUnlocked, rightUnlocked]);
-
-Room0.reachableRooms = ["", Room1, "", ""];
-Room1.reachableRooms = ["", "", Room2, Room0];
-Room2.reachableRooms = [Room3, "", "", Room1];
-Room3.reachableRooms = [Room1, Room0, "", Room2];
-
 
 let curr = Room0;
 update(Room0);
 
 
-// TRAVELLING 
-// for unlocked doors, just go straight through on click
-if (!curr.doors[0].locked) {
-    firstDoor.addEventListener("click", function() {
-        update(curr.reachableRooms[0]);
-    });
-}
-if (!curr.doors[1].locked) {
-    secondDoor.addEventListener("click", function() {
-        update(curr.reachableRooms[1]);
-    });
-}
-if (!curr.doors[2].locked) {
-    thirdDoor.addEventListener("click", function() {
-        update(curr.reachableRooms[2]);
-    });
-}
-backDoor.addEventListener("click", function() {
-    update(curr.reachableRooms[3]);
-});
-
-
 // INVENTORY AND PROPS
+let inventory = {};
 let selectedElement = false;
 let offset;
 
 function makeDraggable(evt) {
-
     var svg = evt.target;
     svg.addEventListener('mousedown', startDrag);
     svg.addEventListener('mousemove', drag);
@@ -215,7 +126,6 @@ function unlock(doornum) {
     update(curr);
 } 
 
-//putInInventory checks for which is the next open slot and adds it in to the first open slot
 function updateInventory() {
     var i = 0;
     for (var key in inventory) {
@@ -242,7 +152,8 @@ function updateInventory() {
     }
 }
 
-// removing objects in the inventory 
+// TODO: removing objects in the inventory 
+/*
 slot0.addEventListener("dblclick", removeFromInventory());
 slot1.addEventListener("click", removeFromInventory());
 slot2.addEventListener("click", removeFromInventory());
@@ -256,8 +167,71 @@ function removeFromInventory(slot) {
     delete inventory[item.id];
     item.remove();   
 }
+*/
 
-//FUNCTIONS FOR TRAVELLING
+
+// TEXT
+function putText(currText, currOrder) {
+    var textDiv = document.createElement('div');
+    textDiv.className = "textContainer";
+    textDiv.id = currOrder;
+
+    while (currText.length > 0 && currText[0].order == currOrder) { // can display multiple text objects at the same time
+        var firstText = currText.shift(); // this deletes the first item in textArr and returns it
+
+        // can have multiple texts in the same div, clickable and non-clickable
+        var textPara = document.createElement('p');
+        textPara.innerText = firstText.text;
+        if (firstText.positioning != "") {
+            textDiv.style = firstText.positioning;
+        }
+
+        // set style and listeners for text if needed
+        if (firstText.clickable) {
+            textPara.className = "clickText";
+            if (firstText.specialFunction == "") {
+                textPara.addEventListener("click", function() {
+                    document.getElementById(currOrder).remove();
+                    currOrder++;
+                    putText(curr.text, currOrder);
+                    console.log(currOrder);
+                });
+            } else {
+                textPara.addEventListener("click", firstText.specialFunction);
+            }            
+        } else {
+            textPara.className = "text";
+        }
+
+        textDiv.appendChild(textPara);
+    } 
+
+    document.body.appendChild(textDiv);
+}
+
+
+// TRAVELLING
+
+// for unlocked doors, just go straight through on click
+if (!curr.doors[0].locked) {
+    firstDoor.addEventListener("click", function() {
+        update(curr.reachableRooms[0]);
+    });
+}
+if (!curr.doors[1].locked) {
+    secondDoor.addEventListener("click", function() {
+        update(curr.reachableRooms[1]);
+    });
+}
+if (!curr.doors[2].locked) {
+    thirdDoor.addEventListener("click", function() {
+        update(curr.reachableRooms[2]);
+    });
+}
+backDoor.addEventListener("click", function() {
+    update(curr.reachableRooms[3]);
+});
+
 function update(room) {
     console.log(room);
 
@@ -268,6 +242,9 @@ function update(room) {
             p.remove();
         }
     }
+
+    // removing old text
+    var oldTexts = document.getElementsByClassName('textContainer');
 
     currentRoom.setAttributeNS('', 'name', room.id);
     background.setAttributeNS(
@@ -291,8 +268,13 @@ function update(room) {
         currentRoom.appendChild(prop);
     }
 
+    // update curr
     curr = room;
 
+    // calls function putText with an array of Text objects in the new room
+    putText(curr.text, 0);
+
+    // travelling
     if (room.reachableRooms[0] != "" && room.doors[0] != "" && !room.doors[0].locked) {
         door0.setAttributeNS('', 'points', '400,880 773,1022 783,1960 419,2182');
         firstDoor.addEventListener("mouseover", function() {
@@ -354,5 +336,3 @@ function update(room) {
         door3.setAttributeNS('', 'height', '0');
     }
 }
-
-//FUNCTIONS FOR TRAVELLING END

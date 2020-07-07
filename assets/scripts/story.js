@@ -1,54 +1,37 @@
-$(document).ready(function(){
-    $("body").fadeIn(2000);
-
-    $("#text1").delay(1000).fadeIn(1000);
-    
-    $('#ct1').click(function(){
-        $("#text1").fadeOut(500, function(){
-            $("#text2").fadeIn(500);
-            $(".door").fadeIn(0, function() {
-                $(".door").css("cursor", "pointer");
-            });
-        });
-    });
-    
-    $(".door").click(function() {
-        $("#text2").fadeOut(500);
-        $("#text3").delay(500).fadeIn(500);
-    });
-
-    // $("#ct2").click(function() {
-    //     $(".background").hide(0);
-    //     $(".doorAjarBg").show(0);
-    //     $("#text3").hide(0);
-    // })
-
-    $("#door1").click(function() {
-        $(".background").hide(0);
-        $(".doorAjarBg").show(0);
-        $("#text2").hide(0);
-        $("#text4").delay(1000).fadeIn(500);
-    })
-
-    $(".doorAjar").click(function() {
-        $(".background").show(0);
-        $(".doorAjarBg").hide(0);
-        $(".door").hide(0);
-        $(".key").show(0);
-        $("#text4").delay(1000).fadeIn(500);
-    })
-    
-    $("#ct3").click(function() {
-        $("#text4").fadeOut(500, function() {
-            $("#text5").fadeIn(200);
-            $("#text5").fadeOut(8000);
-        })
-    })
-    
-    $("#key 1").click(function() {
-        $(".key").hide(0);
-        $("#text6").fadeIn(200);
-    })
+// HARDCODED STUFF: TEXT, ROOMS, ETC.
 
 
-});
+// STANDARD CONSTANTS
+
+var std_bg = "assets/Images/Rooms/ThreeDoorRoomBackground.svg";
+
+let leftUnlocked = new Door("left");
+let centreUnlocked = new Door("centre");
+let rightUnlocked = new Door("right");
+
+
+// DEFINING ROOMS
+// text: text, style positioning, order, clickable, special function
+// prop: name, img, inspect_img, x, y, w, h
+// room: id, backgroundSrc, text, doors, props
+
+let Text0 = new Text("You wake up in an empty room.", "top: 10%", 0, false);
+let Text1 = new Text("Click me.", "", 0, true); 
+let Text2 = new Text("After click", "top: 50%", 1, false);
+
+let Room0 = new Room(0, "assets/Images/Rooms/OneDoorBackground.svg", [Text0, Text1, Text2], ["", centreUnlocked, ""]);
+
+let lockedKeyDoor = new Door("right", true, "key 1");
+let key1 = new Prop("key 1", "assets/Images/Key.svg", "assets/images/key.svg", 727, 2178, 185, 169);
+let Room1 = new Room(1, std_bg, document.getElementsByClassName("Room1"), [leftUnlocked, centreUnlocked, lockedKeyDoor], {"key 1": key1});
+
+let Room2 = new Room(2, std_bg, [], [leftUnlocked, centreUnlocked, rightUnlocked]);
+
+let Room3 = new Room(3, std_bg, [], [leftUnlocked, centreUnlocked, rightUnlocked]);
+
+
+// DEFINING REACHABLE ROOMS 
+Room0.reachableRooms = ["", Room1, "", ""];
+Room1.reachableRooms = ["", "", Room2, Room0];
+Room2.reachableRooms = [Room3, "", "", Room1];
+Room3.reachableRooms = [Room1, Room0, "", Room2];

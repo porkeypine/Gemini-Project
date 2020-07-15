@@ -158,16 +158,6 @@ function updateInventory() {
     }
 }
 
-// TODO: removing objects in the inventory 
-/*
-slot0.addEventListener("dblclick", removeFromInventory());
-slot1.addEventListener("click", removeFromInventory());
-slot2.addEventListener("click", removeFromInventory());
-slot3.addEventListener("click", removeFromInventory());
-slot4.addEventListener("click", removeFromInventory());
-slot5.addEventListener("click", removeFromInventory());
-*/
-
 //INSPECT AND DELETE
 function inspectFromInventory(slot) {
     console.log('viewing slot' + slot);

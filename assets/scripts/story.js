@@ -22,8 +22,10 @@ let Text2 = new Text("After click", "top: 50%", 1, false);
 let Room0 = new Room(0, "assets/Images/Rooms/OneDoorBackground.svg", [Text0, Text1, Text2], ["", centreUnlocked, ""]);
 
 let lockedKeyDoor = new Door("right", true, "key 1");
-let key1 = new Prop("key 1", "assets/Images/Key.svg", "assets/images/key.svg", 727, 2178, 185, 169);
-let Room1 = new Room(1, std_bg, document.getElementsByClassName("Room1"), [leftUnlocked, centreUnlocked, lockedKeyDoor], {"key 1": key1});
+let key1 = new Prop("key 1", "assets/Images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
+let key2 = new Prop("key 2", "assets/Images/Key.svg", "assets/images/KeyInspect.svg", 400, 1500, 185, 169);
+let key3 = new Prop("key 3", "assets/Images/Key.svg", "assets/images/KeyInspect.svg", 500, 200, 185, 169);
+let Room1 = new Room(1, std_bg, document.getElementsByClassName("Room1"), [leftUnlocked, centreUnlocked, lockedKeyDoor], {"key 1" : key1, "key 2" : key2, "key 3" : key3});
 
 let Room2 = new Room(2, std_bg, [], [leftUnlocked, centreUnlocked, rightUnlocked]);
 

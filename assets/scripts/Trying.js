@@ -32,6 +32,19 @@ let item4 = document.getElementById("item4");
 let item5 = document.getElementById("item5");
 let pocket = document.getElementById("inventory");
 
+let inspector = document.getElementById("inspector");
+let inspectButt0 = document.getElementById("inspectButt0");
+let deleteButt0 = document.getElementById("deleteButt0");
+let inspectButt1 = document.getElementById("inspectButt1");
+let deleteButt1 = document.getElementById("deleteButt1");
+let inspectButt2 = document.getElementById("inspectButt2");
+let deleteButt2 = document.getElementById("deleteButt2");
+let inspectButt3 = document.getElementById("inspectButt3");
+let deleteButt3 = document.getElementById("deleteButt3");
+let inspectButt4 = document.getElementById("inspectButt4");
+let deleteButt4 = document.getElementById("deleteButt4");
+let inspectButt5 = document.getElementById("inspectButt5");
+let deleteButt5 = document.getElementById("deleteButt5");
 
 
 let curr = Room0;
@@ -49,7 +62,6 @@ function makeDraggable(evt) {
     svg.addEventListener('mousemove', drag);
     svg.addEventListener('mouseup', endDrag);
     svg.addEventListener('mouseleave', endDrag);
-    svg.addEventListener('contextmenu', removeFromInventory(), false);
     function startDrag(evt) {
         if (evt.target.classList.contains('draggable')) {
             selectedElement = evt.target;
@@ -138,17 +150,10 @@ function updateInventory() {
         item.setAttributeNS('', 'class', 'draggable');
         item.setAttributeNS('', 'id', key);
         item.setAttributeNS('', 'x', '3710');
-        // var y = 320 + i * 310;
         item.setAttributeNS('', 'y', 320 + i * 310);
         item.setAttributeNS('', 'width', '280');
         item.setAttributeNS('', 'height', '280');
         this['slot' + i].appendChild(item);
-        // this['item' + i].setAttributeNS(
-        //     'http://www.w3.org/1999/xlink', 
-        //     'xlink:href', 
-        //     inventory[key].img);
-        // this['item' + i].setAttributeNS('', 'class', 'draggable');
-        // this['item' + i].setAttributeNS('', 'id', key);
         i++;
     }
 }
@@ -161,16 +166,78 @@ slot2.addEventListener("click", removeFromInventory());
 slot3.addEventListener("click", removeFromInventory());
 slot4.addEventListener("click", removeFromInventory());
 slot5.addEventListener("click", removeFromInventory());
-
-function removeFromInventory() {
-    console.log('remove slot ' + slot);
-    var item = this['slot' + 0].firstElementChild;
-    delete inventory[item.name];
-    item.remove();
-    return false;
-}
 */
 
+//INSPECT AND DELETE
+function inspectFromInventory(slot) {
+    console.log('viewing slot' + slot);
+    var item = this['slot' + slot].firstElementChild;
+    if (inspector.getAttribute("class") == "hide" && item.getAttribute('id') != '') {
+        inspector.setAttributeNS('', 'class', '');
+        console.log(inventory[item.getAttribute('id')]);
+        inspectProp.setAttributeNS(
+            'http://www.w3.org/1999/xlink', 
+            'xlink:href', 
+            inventory[item.getAttribute('id')].inspect_img);
+        inspectProp.setAttributeNS('', 'class', '');
+    }
+}
+function removeFromInventory(slot) {
+    console.log('remove slot ' + slot);
+    var item = this['slot' + slot].firstElementChild;
+    delete inventory[item.name];
+    item.remove();
+}
+let inspectProp = document.getElementById("inspectProp");
+inspectProp.setAttributeNS('', 'id', 'inspectProp');
+inspectProp.setAttributeNS('', 'class', 'hide');
+background.addEventListener("click", function(){
+    if (inspector.getAttribute("class") != 'hide') {
+        inspector.setAttributeNS('', 'class', 'hide');
+        inspectProp.setAttributeNS(
+            '',
+            'class',
+            'hide'
+        );
+    }
+});
+inspectButt0.addEventListener("click", function(){
+    inspectFromInventory(0);
+});
+inspectButt1.addEventListener("click", function(){
+    inspectFromInventory(1);
+});
+inspectButt2.addEventListener("click", function(){
+    inspectFromInventory(2);
+});
+inspectButt3.addEventListener("click", function(){
+    inspectFromInventory(3);
+});
+inspectButt4.addEventListener("click", function(){
+    inspectFromInventory(4);
+});
+inspectButt5.addEventListener("click", function(){
+    inspectFromInventory(5);
+});
+
+deleteButt0.addEventListener("click", function(){
+    removeFromInventory(0);
+});
+deleteButt1.addEventListener("click", function(){
+    removeFromInventory(1);
+});
+deleteButt2.addEventListener("click", function(){
+    removeFromInventory(2);
+});
+deleteButt3.addEventListener("click", function(){
+    removeFromInventory(3);
+});
+deleteButt4.addEventListener("click", function(){
+    removeFromInventory(4);
+});
+deleteButt5.addEventListener("click", function(){
+    removeFromInventory(5);
+});
 
 // TEXT
 function putText(currText, currOrder) {

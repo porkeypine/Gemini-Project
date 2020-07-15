@@ -46,10 +46,13 @@ let deleteButt4 = document.getElementById("deleteButt4");
 let inspectButt5 = document.getElementById("inspectButt5");
 let deleteButt5 = document.getElementById("deleteButt5");
 
+let overlay = document.getElementById("overlay");
+
+let doorOpenSound = new Audio("assets/Sounds/door_knob short.wav");
+doorOpenSound.volume = 0.27;
 
 let curr = Room0;
 update(Room0);
-
 
 // INVENTORY AND PROPS
 let inventory = {};
@@ -122,6 +125,11 @@ function makeDraggable(evt) {
                 unlock(2);
             }
         }
+        else {
+            curr.props[selectedElement.id].x = coord.x - offset.x;
+            curr.props[selectedElement.id].y = coord.y - offset.y;
+        }
+
         if (selectedElement.id in inventory) {
             var slot = selectedElement.parentNode.slot;
             console.log(slot);
@@ -239,6 +247,7 @@ function putText(currText, currOrder) {
         textDiv.id = currOrder;
 
         while (currText.length > 0 && currText[0].order == currOrder) { // can display multiple text objects at the same time
+            overlay.classList.remove('hide')
             var firstText = currText.shift(); // this deletes the first item in textArr and returns it
 
             // can have multiple texts in the same div, clickable and non-clickable
@@ -256,7 +265,6 @@ function putText(currText, currOrder) {
                         document.getElementById(currOrder).remove();
                         currOrder++;
                         putText(curr.text, currOrder);
-                        console.log(currOrder);
                     });
                 } else {
                     textPara.addEventListener("click", firstText.specialFunction);
@@ -264,11 +272,13 @@ function putText(currText, currOrder) {
             } else {
                 textPara.className = "text";
             }
-
             textDiv.appendChild(textPara);
-        } 
-
+        }
+        console.log(currText.length);
         document.body.appendChild(textDiv);
+    } 
+    if (currText.length == 0) {
+        overlay.classList.add('hide');
     }
 }
 
@@ -278,16 +288,19 @@ function putText(currText, currOrder) {
 // for unlocked doors, just go straight through on click
 if (!curr.doors[0].locked) {
     firstDoor.addEventListener("click", function() {
+        doorOpenSound.play();
         update(curr.reachableRooms[0]);
     });
 }
 if (!curr.doors[1].locked) {
     secondDoor.addEventListener("click", function() {
+        doorOpenSound.play();
         update(curr.reachableRooms[1]);
     });
 }
 if (!curr.doors[2].locked) {
     thirdDoor.addEventListener("click", function() {
+        doorOpenSound.play();
         update(curr.reachableRooms[2]);
     });
 }

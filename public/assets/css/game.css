@@ -19,7 +19,7 @@ body, html {
 
 .oneDoorRoom {
     /* background image stuff - for old browsers that don't do svg */
-    background-image: url("../images/OneDoor.png");
+    /* background-image: url("../images/OneDoor.png"); */
     background-size: contain;
         -webkit-background-size: contain;
         -moz-background-size: contain;
@@ -135,7 +135,7 @@ body, html {
     left: 31%;
     top: 85%;
     cursor: pointer;
-    background-image: url('/assets/images/Key.png');
+    /* background-image: url('/assets/images/Key.png'); */
 }
 
 

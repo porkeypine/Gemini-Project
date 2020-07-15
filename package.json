@@ -1,0 +1,26 @@
+{
+  "name": "Gemini-Project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theyellowfellow/Gemini-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theyellowfellow/Gemini-Project/issues"
+  },
+  "homepage": "https://github.com/theyellowfellow/Gemini-Project#readme",
+  "engines": {
+    "node": "13.6.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

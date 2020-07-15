@@ -48,7 +48,7 @@ let deleteButt5 = document.getElementById("deleteButt5");
 
 let overlay = document.getElementById("overlay");
 
-let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
+let doorOpenSound = document.getElementById("doorKnob");
 doorOpenSound.volume = 0.27;
 
 let curr = Room0;

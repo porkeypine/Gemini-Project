@@ -5,10 +5,10 @@ const path = require('path');
 
 app
     .use(express.static(__dirname + '/public'))
-    .use('images', express.static(__dirname + '/assets/images'))
+    // .use('images', express.static(__dirname + '/assets/images'))
     // .set('views', path.join(__dirname, 'views'))
     .get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, '/index.html'));
+        res.sendFile(path.join(__dirname, '/public', '/index.html'));
         // res.sendFile('index.html');
         // res.render('index')
     })

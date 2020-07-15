@@ -93,7 +93,7 @@ emptyRoom.reachableRooms = [];
 
 let Room0 = new RoomTemplate();
 Room0.id = 0;
-Room0.backgroundSrc = "assets/images/Rooms/OneDoorBackground.svg";
+Room0.backgroundSrc = "assets/images/rooms/OneDoorBackground.svg";
 let key1 = new prop();
 key1.id = "key 1";
 key1.imgsrc = "assets/images/key.svg";
@@ -106,7 +106,7 @@ Room0.props = [key1, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, empt
 
 let Room1 = new RoomTemplate();
 Room1.id = 1;
-Room1.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
+Room1.backgroundSrc = "assets/images/rooms/ThreeDoorRoomBackground.svg";
 let key2 = new prop();
 key2.id = "key 2";
 key2.x = 727;
@@ -118,11 +118,11 @@ Room1.props = [key2, emptyProp, emptyProp, emptyProp, emptyProp, emptyProp, empt
 
 let Room2 = new RoomTemplate();
 Room2.id = 2;
-Room2.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
+Room2.backgroundSrc = "assets/images/rooms/ThreeDoorRoomBackground.svg";
 
 let Room3 = new RoomTemplate();
 Room3.id = 3;
-Room3.backgroundSrc = "assets/images/Rooms/ThreeDoorRoomBackground.svg";
+Room3.backgroundSrc = "assets/images/rooms/ThreeDoorRoomBackground.svg";
 
 Room0.reachableRooms = [emptyRoom, Room1, emptyRoom, emptyRoom];
 Room0.doors = [emptyDoor0, openDoor1, emptyDoor2];

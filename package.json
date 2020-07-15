@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/theyellowfellow/Gemini-Project#readme",
   "engines": {
-    "node": "13.6.0"
+    "node": "13.6.0",
+    "npm": "6.13.4"
   },
   "dependencies": {
     "express": "^4.17.1"

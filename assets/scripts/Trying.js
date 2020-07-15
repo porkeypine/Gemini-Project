@@ -241,41 +241,43 @@ deleteButt5.addEventListener("click", function(){
 
 // TEXT
 function putText(currText, currOrder) {
-    var textDiv = document.createElement('div');
-    textDiv.className = "textContainer";
-    textDiv.id = currOrder;
+    if (currText.length > 0) {
+        var textDiv = document.createElement('div');
+        textDiv.className = "textContainer";
+        textDiv.id = currOrder;
 
-    while (currText.length > 0 && currText[0].order == currOrder) { // can display multiple text objects at the same time
-        var firstText = currText.shift(); // this deletes the first item in textArr and returns it
+        while (currText.length > 0 && currText[0].order == currOrder) { // can display multiple text objects at the same time
+            var firstText = currText.shift(); // this deletes the first item in textArr and returns it
 
-        // can have multiple texts in the same div, clickable and non-clickable
-        var textPara = document.createElement('p');
-        textPara.innerText = firstText.text;
-        if (firstText.positioning != "") {
-            textDiv.style = firstText.positioning;
-        }
+            // can have multiple texts in the same div, clickable and non-clickable
+            var textPara = document.createElement('p');
+            textPara.innerText = firstText.text;
+            if (firstText.positioning != "") {
+                textDiv.style = firstText.positioning;
+            }
 
-        // set style and listeners for text if needed
-        if (firstText.clickable) {
-            textPara.className = "clickText";
-            if (firstText.specialFunction == "") {
-                textPara.addEventListener("click", function() {
-                    document.getElementById(currOrder).remove();
-                    currOrder++;
-                    putText(curr.text, currOrder);
-                    console.log(currOrder);
-                });
+            // set style and listeners for text if needed
+            if (firstText.clickable) {
+                textPara.className = "clickText";
+                if (firstText.specialFunction == "") {
+                    textPara.addEventListener("click", function() {
+                        document.getElementById(currOrder).remove();
+                        currOrder++;
+                        putText(curr.text, currOrder);
+                        console.log(currOrder);
+                    });
+                } else {
+                    textPara.addEventListener("click", firstText.specialFunction);
+                }            
             } else {
-                textPara.addEventListener("click", firstText.specialFunction);
-            }            
-        } else {
-            textPara.className = "text";
-        }
+                textPara.className = "text";
+            }
 
-        textDiv.appendChild(textPara);
-    } 
+            textDiv.appendChild(textPara);
+        } 
 
-    document.body.appendChild(textDiv);
+        document.body.appendChild(textDiv);
+    }
 }
 
 
@@ -314,6 +316,10 @@ function update(room) {
 
     // removing old text
     var oldTexts = document.getElementsByClassName('textContainer');
+    for (var i = 0; i < oldTexts.length; i++) {
+        oldTexts[i].remove();
+        console.log(oldTexts);
+    }
 
     currentRoom.setAttributeNS('', 'name', room.id);
     background.setAttributeNS(

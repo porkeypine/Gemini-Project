@@ -91,7 +91,7 @@ function makeDraggable(evt) {
             // updating inventory
             var p = selectedElement.id;
             inventory[p] = curr.props[p]; 
-            updateInventory();
+            updateInventory(p);
 
             // deleting from room
             delete curr.props[p];
@@ -123,7 +123,8 @@ function makeDraggable(evt) {
             }
         }
         if (selectedElement.id in inventory) {
-            var slot = selectedElement.parentNode.slot
+            var slot = selectedElement.parentNode.slot;
+            console.log(slot);
             selectedElement.setAttributeNS('', 'x', '3710');
             selectedElement.setAttributeNS('', 'y', 320 + parseInt(slot) * 310);
             selectedElement.setAttributeNS('', 'width', '280');
@@ -139,23 +140,24 @@ function unlock(doornum) {
     update(curr);
 } 
 
-function updateInventory() {
+function updateInventory(key) {
     var i = 0;
-    for (var key in inventory) {
-        var item = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-        item.setAttributeNS(
-            'http://www.w3.org/1999/xlink', 
-            'xlink:href', 
-            inventory[key].img);
-        item.setAttributeNS('', 'class', 'draggable');
-        item.setAttributeNS('', 'id', key);
-        item.setAttributeNS('', 'x', '3710');
-        item.setAttributeNS('', 'y', 320 + i * 310);
-        item.setAttributeNS('', 'width', '280');
-        item.setAttributeNS('', 'height', '280');
-        this['slot' + i].appendChild(item);
+    // for (var key in inventory) {
+    while (this['slot' + i].firstElementChild != null) {
         i++;
     }
+    var item = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    item.setAttributeNS(
+        'http://www.w3.org/1999/xlink', 
+        'xlink:href', 
+        inventory[key].img);
+    item.setAttributeNS('', 'class', 'draggable');
+    item.setAttributeNS('', 'id', key);
+    item.setAttributeNS('', 'x', '3710');
+    item.setAttributeNS('', 'y', 320 + i * 310);
+    item.setAttributeNS('', 'width', '280');
+    item.setAttributeNS('', 'height', '280');
+    this['slot' + i].appendChild(item);
 }
 
 //INSPECT AND DELETE
@@ -175,7 +177,7 @@ function inspectFromInventory(slot) {
 function removeFromInventory(slot) {
     console.log('remove slot ' + slot);
     var item = this['slot' + slot].firstElementChild;
-    delete inventory[item.name];
+    delete inventory[item.id];
     item.remove();
 }
 let inspectProp = document.getElementById("inspectProp");

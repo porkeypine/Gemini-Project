@@ -1,0 +1,179 @@
+body, html {
+    background: white; 
+    font-family: sans-serif;
+    height: 100%;
+}
+
+.welcome {
+    background: rgb(223, 247, 255);
+}
+
+.welcomeContainer {
+    display: block;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.oneDoorRoom {
+    /* background image stuff - for old browsers that don't do svg */
+    /* background-image: url("../images/OneDoor.png"); */
+    background-size: contain;
+        -webkit-background-size: contain;
+        -moz-background-size: contain;
+        -o-background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.overlay {
+  position: absolute; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  fill: black;
+  opacity: 0;
+}
+
+.background {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-44%);
+}
+
+#background {
+    z-index: -1;
+}
+
+.doorAjarBg {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-44%);
+}
+
+.doorAjar:hover {
+    cursor: pointer;
+}
+
+/* for animation stuffs in the future */
+.door:hover {
+    animation: pop 3s ease; 
+    border: 5px solid black;
+}
+  
+.draggable {
+  cursor: move;
+  z-index: 1;
+}
+
+
+@keyframes pop {
+    0% {
+
+    }
+    50% {
+
+    }
+    100% {
+
+    }
+}
+
+.textContainer {
+    background-color: white;
+    width: fit-content;
+    position: absolute;
+    left: 44%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.text {
+    font-family: 'Lucida Sans';
+    /* font-size: 0.9rem; */
+    margin: 0px;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.clickText {
+    font-family: 'Lucida Sans';
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0px;
+    margin-top: 10px;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+    color: #0076EF;
+    text-decoration-line: underline;
+}
+
+.clickText:hover {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.inventory {
+    cursor: pointer;
+}
+
+.key {
+    position: absolute;
+    left: 31%;
+    top: 85%;
+    cursor: pointer;
+    /* background-image: url('/assets/images/Key.png'); */
+}
+
+
+/* .hide::before {
+    animation: fadeText 1s ease forwards;
+}
+
+@keyframes fadeText {
+    from {
+        opacity: 1;
+        pointer-events: all;
+    }
+    to {
+        opacity: 0;
+        pointer-events: none;
+    }
+} */
+
+.welcomeText {
+    font-size: 1.5rem;
+}
+
+.center {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+p::selection {
+    background: rgb(81, 204, 163);
+    color: white;
+}
+
+footer {
+    position: absolute;
+    bottom: 0px;
+    right: 1rem;
+    font-size: 12px;
+}

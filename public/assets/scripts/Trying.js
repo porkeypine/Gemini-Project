@@ -306,6 +306,7 @@ if (!curr.doors[2].locked) {
     });
 }
 backDoor.addEventListener("click", function() {
+    doorOpenSound.play();
     update(curr.reachableRooms[3]);
 });
 

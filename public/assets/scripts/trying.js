@@ -133,7 +133,7 @@ function makeDraggable(evt) {
             selectedElement.setAttributeNS('', 'y', 320 + parseInt(slot) * 310);
             selectedElement.setAttributeNS('', 'width', '280');
             selectedElement.setAttributeNS('', 'height', '280');
-        } else {
+        } else if (selectedElement instanceof Prop){
             curr.props[selectedElement.id].x = coord.x - offset.x;
             curr.props[selectedElement.id].y = coord.y - offset.y;
         }

@@ -59,8 +59,9 @@ function roomTwo() {
         inspector.setAttributeNS('', 'class', '');
         inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspect.svg');
         inspectProp.setAttributeNS('', 'class', '');
+        inspectProp.addEventListener("click", openNumPad);
     });
-    inspectProp.addEventListener("click", function() {
+    function openNumPad() {
         code = prompt("Enter the passcode: ");
         if (code == "61283") {
             console.log("unlocked");
@@ -70,12 +71,13 @@ function roomTwo() {
             console.log("wrong wtf try again noob");
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectError.svg');
         }
-    })
+    }
     document.getElementById('background').addEventListener("click", function() {
         inspector.setAttributeNS('', 'class', 'hide');
         inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '');
         inspectProp.setAttributeNS('', 'class', 'hide');
         pad.setAttributeNS('', 'class', '');
+        inspectProp.removeEventListener("click", openNumPad);
     })
     document.getElementById('itemsInRoom').appendChild(pad);
     console.log(code);

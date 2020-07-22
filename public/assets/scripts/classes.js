@@ -1,7 +1,21 @@
 // INITIALISATION: CLASS DECLARATIONS
 
+class Inputs {
+    constructor(id = "", imgSrc = "", inputType = "", inputLength = "", xPos = 0, yPos = 0, height = 0, width = 0, password = "") {
+        this.id = id;
+        this.imgSrc = imgSrc;
+        this.inputType = inputType;
+        this.inputLength = inputLength;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.height = height;
+        this.width = width;
+        this.password = password;
+    }
+}
+
 class Room {
-    constructor(id = "-1", backgroundSrc = "", text = [], doors = [], props = {}) {
+    constructor(id = "-1", backgroundSrc = "", text = [], doors = [], props = {}, func = "nothing") {
         this.id = id;
         this.backgroundSrc = backgroundSrc;
         this.text = text;
@@ -10,6 +24,7 @@ class Room {
         // iff there's a reachable room for left/centre/right, there will be doors listed in order of left/centre/right
         this.doors = doors;
         this.props = props;
+        this.func = func;
     }
 }
 

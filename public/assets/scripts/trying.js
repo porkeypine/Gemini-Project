@@ -125,10 +125,6 @@ function makeDraggable(evt) {
                 unlock(2);
             }
         }
-        else {
-            curr.props[selectedElement.id].x = coord.x - offset.x;
-            curr.props[selectedElement.id].y = coord.y - offset.y;
-        }
 
         if (selectedElement.id in inventory) {
             var slot = selectedElement.parentNode.slot;
@@ -137,6 +133,9 @@ function makeDraggable(evt) {
             selectedElement.setAttributeNS('', 'y', 320 + parseInt(slot) * 310);
             selectedElement.setAttributeNS('', 'width', '280');
             selectedElement.setAttributeNS('', 'height', '280');
+        } else if (selectedElement instanceof Prop){
+            curr.props[selectedElement.id].x = coord.x - offset.x;
+            curr.props[selectedElement.id].y = coord.y - offset.y;
         }
             
         selectedElement = false;
@@ -311,6 +310,9 @@ backDoor.addEventListener("click", function() {
 });
 
 function update(room) {
+    if (room.func != "nothing") {
+        room.func;
+    }
     console.log(room);
 
     // removing old props

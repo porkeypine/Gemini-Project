@@ -9,11 +9,11 @@ let leftUnlocked = new Door("left");
 let centreUnlocked = new Door("centre");
 let rightUnlocked = new Door("right");
 
-
 // DEFINING ROOMS
 // text: text, style positioning, order, clickable, special function
 // prop: name, img, inspect_img, x, y, w, h
 // room: id, backgroundSrc, text, doors, props
+// input: id, img, type, input length, xPos, yPos, width, height, password
 
 let Text0_1 = new Text("You wake up in an empty room.", "top: 10%", 0, false);
 let Text0_2 = new Text("Click me.", "", 0, true); 
@@ -24,6 +24,7 @@ let lockedKeyDoor = new Door("right", true, "key 1");
 let key1 = new Prop("key 1", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
 let key2 = new Prop("key 2", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 400, 1500, 185, 169);
 let key3 = new Prop("key 3", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 500, 200, 185, 169);
+
 let Room1 = new Room(1, "assets/images/rooms/Room1.svg", document.getElementsByClassName("Room1"), [leftUnlocked, centreUnlocked, lockedKeyDoor], {"key 1" : key1, "key 2" : key2, "key 3" : key3});
 
 let Room2 = new Room(2, "assets/images/rooms/Room2.svg", [], [leftUnlocked, centreUnlocked, rightUnlocked]);
@@ -36,3 +37,21 @@ Room0.reachableRooms = ["", Room1, "", ""];
 Room1.reachableRooms = ["", "", Room2, Room0];
 Room2.reachableRooms = [Room3, "", "", Room1];
 Room3.reachableRooms = [Room1, Room0, "", Room2];
+
+// HARDCODING STUFF
+
+function roomTwo() {
+    var pad = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    pad.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', numPad.imgSrc)
+        var newInput = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+        newInput.setAttributeNS('http://www.w3.org/1999/xlink', 
+            'xlink:href', room.inputs[key].imgSrc);
+        newInput.setAtrributeNS('', 'x', key.xPos);
+        newInput.setAttributeNS('', 'y', key.yPos);
+        newInput.setAtrributeNS('', 'width', key.width);
+        newInput.setAttributeNS('', 'y', key.height);
+        var code;
+        newInput.setAttributeNS('', 'onclick', prompt("Enter the passcode: "))
+        code = newInput.prompt;
+        console.log(code);
+}

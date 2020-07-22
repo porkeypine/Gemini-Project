@@ -133,7 +133,7 @@ function makeDraggable(evt) {
             selectedElement.setAttributeNS('', 'y', 320 + parseInt(slot) * 310);
             selectedElement.setAttributeNS('', 'width', '280');
             selectedElement.setAttributeNS('', 'height', '280');
-        } else if (selectedElement instanceof Prop){
+        } else {
             curr.props[selectedElement.id].x = coord.x - offset.x;
             curr.props[selectedElement.id].y = coord.y - offset.y;
         }
@@ -310,17 +310,13 @@ backDoor.addEventListener("click", function() {
 });
 
 function update(room) {
-    if (room.func != "nothing") {
-        room.func;
-    }
     console.log(room);
 
     // removing old props
-    for (var key in curr.props) {
-        var p = document.getElementById(key);
-        if (p != null) {
-            p.remove();
-        }
+    var thingsToRemove = document.getElementById('itemsInRoom');
+    while(thingsToRemove.firstElementChild) {
+        console.log(thingsToRemove.lastElementChild);
+        thingsToRemove.lastElementChild.remove();
     }
 
     // removing old text
@@ -328,6 +324,11 @@ function update(room) {
     for (var i = 0; i < oldTexts.length; i++) {
         oldTexts[i].remove();
         console.log(oldTexts);
+    }
+    
+    if (room.func != "nothing") {
+        room.func();
+        console.log("done");
     }
 
     currentRoom.setAttributeNS('', 'name', room.id);
@@ -349,7 +350,7 @@ function update(room) {
         prop.setAttributeNS('', 'height', room.props[key].height);
         prop.setAttributeNS('', 'class', 'draggable');
         prop.setAttributeNS('', 'id', room.props[key].name);
-        currentRoom.appendChild(prop);
+        document.getElementById('itemsInRoom').appendChild(prop);
     }
 
     // update curr

@@ -3,11 +3,11 @@
 
 // STANDARD CONSTANTS
 
-var std_bg = "assets/images/rooms/ThreeDoorRoomBackground.svg";
+const std_bg = "assets/images/rooms/OneDoorBackground.svg";
 
-let leftUnlocked = new Door("left");
-let centreUnlocked = new Door("centre");
-let rightUnlocked = new Door("right");
+const leftUnlocked = new Door("left");
+const centreUnlocked = new Door("centre");
+const rightUnlocked = new Door("right");
 
 // DEFINING ROOMS
 // text: text, style positioning, order, clickable, special function
@@ -15,22 +15,24 @@ let rightUnlocked = new Door("right");
 // room: id, backgroundSrc, text, doors, props, special function
 // input: id, img, type, input length, xPos, yPos, width, height, password
 
-let Text0_1 = new Text("You wake up in an empty room.", "top: 10%", 0, false);
-let Text0_2 = new Text("Click me.", "", 0, true); 
-let Text0_3 = new Text("After click", "top: 50%", 1, false);
-let Room0 = new Room(0, "assets/images/rooms/Room0.svg", [Text0_1, Text0_2, Text0_3], ["", centreUnlocked, ""]);
+const Text0_1 = new Text("You open your eyes slowly, groggy with sleep. \nYou're sitting on the floor in an empty, sterile room.\nThere is a single, unmarked door on the opposite wall. \nExcept for the brass door knob, everything is eerily white.", "top: 10%", 0, false);
+const Text0_2 = new Text("Get up.", "", 0, true); 
+const Text0_3 = new Text("You stand up, blood rushing dizzily away from your head. \nSpots dance in your vision for a moment, \n and you lean back against the wall until you're steady.", "top: 40%", 1, false, "displayNextText");
+const Text0_4 = new Text("The door is unlocked.", "top:80%", 2, false);
+var Room0 = new Room(0, "assets/images/rooms/Room0.svg", [Text0_1, Text0_2, Text0_3, Text0_4], ["", centreUnlocked, ""]);
 
-let lockedKeyDoor = new Door("centre", true, "key 1");
-let lockedNumDoor = new Door("centre", true)
-let key1 = new Prop("key 1", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
-let key2 = new Prop("key 2", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 400, 1500, 185, 169);
-let key3 = new Prop("key 3", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 500, 200, 185, 169);
+const lockedKeyDoor = new Door("centre", true, "key 1");
+const key1 = new Prop("key 1", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
+const Text1_1 = new Text("You enter the next room and the door shuts behind you. \nThis room is exactly the same as the previous one, \nbut there is a key on the floor that you decide to pick up.", "top:25%", 0, false, "displayNextText");
+const Text1_2 = new Text("\nYou figure that you'd try the door behind you.", "top:50%", 1, false);
+var Room1 = new Room(1, "assets/images/rooms/Room1.svg", [Text1_1, Text1_2], [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1});
 
-let Room1 = new Room(1, "assets/images/rooms/Room1.svg", document.getElementsByClassName("Room1"), [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1, "key 2" : key2, "key 3" : key3});
+const lockedNumDoor = new Door("centre", true);
+const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \nEverything you need is already here.", "top: 25%", 0, false, "displayNextText");
+const Text2_2 = new Text("But... could you have missed out something?", "top: 80%", 1, false);
+var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomTwo);
 
-let Room2 = new Room(2, "assets/images/rooms/Room2.svg", [], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomTwo);
-
-let Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomThree);
+var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomThree);
 
 // DEFINING REACHABLE ROOMS 
 Room0.reachableRooms = ["", Room1, "", ""];
@@ -84,7 +86,6 @@ function roomTwo() {
         inspectProp.removeEventListener("click", openNumPad);
     })
     document.getElementById('itemsInRoom').appendChild(pad);
-    console.log(code);
 }
 
 function roomThree() {

@@ -251,8 +251,9 @@ deleteButt5.addEventListener("click", function(){
 
 // TEXT
 function putText(currText, currOrder) {
+    console.log("Text currOrder: " + currOrder + " Text array length: " + currText.length);
     if (currText.length > 0) {
-        var textDiv = document.createElement('div');
+        const textDiv = document.createElement('div');
         textDiv.className = "textContainer";
         textDiv.id = currOrder;
 
@@ -263,15 +264,14 @@ function putText(currText, currOrder) {
             // can have multiple texts in the same div, clickable and non-clickable
             var textPara = document.createElement('p');
             textPara.innerText = firstText.text;
-            if (firstText.positioning != "") {
-                textDiv.style = firstText.positioning;
-            }
+            if (firstText.positioning != "") textDiv.style = firstText.positioning;
 
             // set style and listeners for text if needed
             if (firstText.clickable) {
                 textPara.className = "clickText";
                 if (firstText.specialFunction == "") {
                     textPara.addEventListener("click", function() {
+                        // displays next text
                         document.getElementById(currOrder).remove();
                         currOrder++;
                         putText(curr.text, currOrder);
@@ -281,10 +281,23 @@ function putText(currText, currOrder) {
                 }            
             } else {
                 textPara.className = "text";
+                // for displaying two non-clickable text divs (at different positions basically) at the same time
+                function nextText() {
+                    document.getElementById(currOrder).remove();
+                    currOrder++;
+                    putText(curr.text, currOrder);
+                    currentRoom.removeEventListener("click", nextText);
+                }
+                if (firstText.specialFunction == "displayNextText") {
+                    setTimeout(function(){
+                        currentRoom.addEventListener("click", nextText);
+                    }, 1000);
+                }
             }
+
             textDiv.appendChild(textPara);
         }
-        console.log(currText.length);
+        // console.log(currText.length);
         document.body.appendChild(textDiv);
     } 
     if (currText.length == 0) {
@@ -333,7 +346,6 @@ function update(room) {
     var oldTexts = document.getElementsByClassName('textContainer');
     for (var i = 0; i < oldTexts.length; i++) {
         oldTexts[i].remove();
-        console.log(oldTexts);
     }
 
     currentRoom.setAttributeNS('', 'name', room.id);
@@ -341,6 +353,7 @@ function update(room) {
         'http://www.w3.org/1999/xlink', 
         'xlink:href', 
         room.backgroundSrc);
+        
     // put all props 
     for (var key in room.props) {
         var prop = document.createElementNS('http://www.w3.org/2000/svg', 'image');
@@ -361,8 +374,9 @@ function update(room) {
     curr = room;
 
     // calls function putText with an array of Text objects in the new room
+    console.log(curr.text);
     putText(curr.text, 0);
-
+    
     // travelling
     if (room.reachableRooms[0] != "" && room.doors[0] != "" && !room.doors[0].locked) {
         door0.setAttributeNS('', 'points', '400,880 773,1022 783,1960 419,2182');
@@ -413,6 +427,21 @@ function update(room) {
     }
 
     if (room.reachableRooms[3] != "") {
+
+        door3.setAttributeNS('', 'x', '1440');
+        door3.setAttributeNS('', 'y', '2340');
+        door3.setAttributeNS('', 'width', '660');
+        door3.setAttributeNS('', 'height', '141');
+    } else {
+        door3.setAttributeNS('', 'width', '0');
+        door3.setAttributeNS('', 'height', '0');
+    }
+
+    if (room.func != "nothing") {
+        room.func();
+        console.log("done");
+    }
+}
 
         door3.setAttributeNS('', 'x', '1440');
         door3.setAttributeNS('', 'y', '2340');

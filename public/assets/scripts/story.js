@@ -114,8 +114,8 @@ function roomThree() {
     var flickering = [1, 1, 1, 2, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 1, 1, 1, 2 , 1, 0, 2];
     //-0 on, 1200 off, -1600 on, 2800 off, - 3200 on, 4400 off, -4800 on, 6000 off, .6400 on, 6800 off, .7200 on, 7600 off, . 8000 on, 8400 off, .9600 on, 10000 off
     //.10400 on, 10800 off, . 11200 on, 11600 off, . 12800 on, 13200 off, .14400 on, 14800 off, .15200 on, 15600 off, . 16000 on, 16400 off, .17600 on, 18000 off,
-    //.18400 on, 18800 off, . 19200 on, 19600 off, .20800 on, 21200 off, . 21600 on, 22000 off, -23200 on, 24400 off, -25600 on, 26800 off, - 28000 on, 29200 off,
-    //-30400 on, 31600 off, . 32000 on, 32400 off, 33600 start again
+    //.18400 on, 18800 off, . 19200 on, 19600 off, .20800 on, 21200 off, . 21600 on, 22000 off, -23200 on, 24400 off, -24800 on, 26000 off, - 26400 on, 27600 off,
+    //-28800 on, 30000 off, . 31400 on, 31800 off, 33000 start again
     function on() {
         setInterval(function () {
             lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');

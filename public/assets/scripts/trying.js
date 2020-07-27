@@ -51,8 +51,8 @@ let overlay = document.getElementById("overlay");
 let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
 doorOpenSound.volume = 0.27;
 
-let curr = Room4;
-update(Room4);
+let curr = Room0;
+update(Room0);
 
 // INVENTORY AND PROPS
 let inventory = {};
@@ -297,7 +297,7 @@ function putText(currText, currOrder) {
                     setTimeout(function(){
                         currentRoom.addEventListener("click", nextText);
                     }, 300);
-                }
+                } 
             }
 
             textDiv.appendChild(textPara);

@@ -25,21 +25,25 @@ const lockedKeyDoor = new Door("centre", true, "key 1");
 const key1 = new Prop("key 1", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
 const Text1_1 = new Text("You enter the next room and the door shuts behind you. \nThis room is exactly the same as the previous one, \nbut there is a key on the floor you can pick up.", "top:28%", 0, false, "displayNextText");
 // BUGGY: can't pick up the key before the text all disappears
-const Text1_2 = new Text("You figure you can also try the door behind you.", "top:40%", 1, false);
-var Room1 = new Room(1, "assets/images/rooms/Room1.svg", [Text1_1, Text1_2], [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1});
+const Text1_2 = new Text("You can also try the door behind you.", "top:78%", 1, false);
+var Room1 = new Room(1, "assets/images/rooms/Room1.svg", [Text1_1, Text1_2], ["", lockedKeyDoor, ""], {"key 1" : key1});
 
 const lockedDoor = new Door("centre", true);
 
-const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \nEverything you need is already here.", "top: 28%", 0, false, "displayNextText");
+const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \n\nEverything you need you should already have.", "top: 28%", 0, false, "displayNextText");
 const Text2_2 = new Text("But... could you have missed out something?", "top: 80%", 1, false);
 const morsePaper = new Prop('morsePaper', 'assets/images/MorseCodePaper.svg', 'assets/images/MorseCodePaperInspect.svg', 727, 2178, 300, 134);
-var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], [leftUnlocked, lockedDoor, rightUnlocked], {}, roomTwo);
+var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], ["", lockedDoor, ""], {}, roomTwo);
 
-var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], ["", lockedDoor, ""], {}, roomThree);
+const Text3_1 = new Text("You're positive you saw something on the floor out of \nthe corner of your eye when you left the room just now. \n\nMaybe you should check, just to be sure.", "top: 28%", 0, false, "displayNextText");
+const Text3_2 = new Text("The flickering of this light is making you feel pretty dizzy.", "top: 78%", 1, false);
+var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [Text3_1, Text3_2], ["", lockedDoor, ""], {}, roomThree);
 
+const Text4_1 = new Text("Goodness, why would anyone leave a vase that dirty just sitting around?", "top:28%", 0, false);
 const cloth = new Prop('cloth', 'assets/images/Cloth.svg', 'assets/images/Cloth.svg', 800, 2100, 260, 260);
-var Room4 = new Room(4, std_bg, [], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
+var Room4 = new Room(4, std_bg, [Text4_1], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
 
+const Text5_1 = new Text("The door is unlocked, but it suddenly occurs to you that whoever owned or touched \nthat dirty vase would likely have touched this doorknob too. \nEven if you can't see it, there could be germs and ...dirty things on it.")
 const lockedGlovesDoor = new Door("centre", true, "gloves");
 const gloves = new Prop("gloves", "assets/images/Gloves.svg", "assets/images/Gloves.svg", 1000, 2000, 260, 260);
 var Room5 = new Room(5, std_bg, [], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
@@ -369,6 +373,14 @@ function clean() {
             unlock(1);
             vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseButton.svg');
             vase.setAttributeNS('', 'id', 'VaseButton');
+            const textDiv = document.createElement('div');
+            textDiv.className = "textContainer";
+            textDiv.style = "top: 30%";
+            const textPara = document.createElement('p');
+            textPara.innerText = "The vase looks clean from far, but you almost definitely \nmissed some spots. Wipe it again?";
+            textPara.className = "text";
+            textDiv.appendChild(textPara);
+            document.body.appendChild(textDiv);
     }
 }
 

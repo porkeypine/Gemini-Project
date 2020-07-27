@@ -389,6 +389,7 @@ function roomFour() {
 //BUGGY CLOTH MAKE OPAQUE
 
 function roomFive() {
+    howOcdAreYou++;
     function imUncomfortable() {
         numberOfTimesClicked++;
         console.log("Clicked door " + numberOfTimesClicked + " times");
@@ -405,6 +406,7 @@ function roomFive() {
         } else if (numberOfTimesClicked == 2) {
             document.getElementById("uncomfortable").innerText = noGloveText[1];
         } else if (numberOfTimesClicked >= 3) {
+            howOcdAreYou--;
             unlock(1);
             // const textDiv = document.createElement('div');
             // textDiv.className = "textContainer";

@@ -48,7 +48,7 @@ const lockedGlovesDoor = new Door("centre", true, "gloves");
 const gloves = new Prop("gloves", "assets/images/Gloves.svg", "assets/images/Gloves.svg", 1000, 2000, 260, 260);
 var Room5 = new Room(5, "assets/images/rooms/Room5.svg", [Text5_1], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
 
-const Text6_1 = new Text("Thank you so much for playing! \n\nThe purpose of this game was to introduce you to various types of OCD symptoms, \nand help put you in the shoes of someone with it. OCD is about much more than \nwashing your hands often or wanting things to be perfect; it involves triggers, anxiety and \nsometimes nonsensical intrusive thoughts, but it can improve with what is known as Exposure \nResponse Prevention therapy -- essentially resisting the compulsions that gives OCD the 'C' in its name! \n\nThis game is still in development, so there's a lot more to come... Stay tuned! :)" + `\n\nYour score is: ${howOcdAreYou}`, "top: 8%", 0, false);
+var Text6_1 = new Text("Thank you so much for playing! \n\nThe purpose of this game was to introduce you to various types of OCD symptoms, \nand help put you in the shoes of someone with it. OCD is about much more than \nwashing your hands often or wanting things to be perfect; it involves triggers, anxiety and \nsometimes nonsensical intrusive thoughts, but it can improve with what is known as Exposure \nResponse Prevention therapy -- essentially resisting the compulsions that gives OCD the 'C' in its name! \n\nThis game is still in development, so there's a lot more to come... Stay tuned! :)", "top: 8%", 0, false);
 
 var Room6 = new Room(6, "", [Text6_1], ["", lockedDoor, ""], {}, finale);
 
@@ -467,5 +467,13 @@ function finale() {
     monster.setAttributeNS('', 'width', 1200);
     monster.setAttributeNS('', 'height', 1550);
     document.getElementById('itemsInRoom').appendChild(monster);
-
+    const textDiv = document.createElement('div');
+    textDiv.className = "textContainer";
+    textDiv.style = "top: 40%";
+    const textPara = document.createElement('p');
+    textPara.innerText = `Your score is: ${howOcdAreYou}`;
+    textPara.className = "text";
+    textDiv.appendChild(textPara);
+    document.body.appendChild(textDiv);
+    
 }

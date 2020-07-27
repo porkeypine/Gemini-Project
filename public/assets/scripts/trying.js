@@ -144,7 +144,17 @@ function makeDraggable(evt) {
 
 
 function unlock(doornum) {
-    curr.doors[doornum].locked = false;
+    switch(doornum) {
+        case 0:
+            curr.doors[0] = leftUnlocked;
+            break;
+        case 1:
+            curr.doors[1] = centreUnlocked;
+            break;
+        case 2:
+            curr.doors[2] = rightUnlocked;
+            break;
+    }
     update(curr);
 } 
 

@@ -20,30 +20,34 @@ let Text0_2 = new Text("Click me.", "", 0, true);
 let Text0_3 = new Text("After click", "top: 50%", 1, false);
 let Room0 = new Room(0, "assets/images/rooms/Room0.svg", [Text0_1, Text0_2, Text0_3], ["", centreUnlocked, ""]);
 
-let lockedKeyDoor = new Door("right", true, "key 1");
+let lockedKeyDoor = new Door("centre", true, "key 1");
 let lockedNumDoor = new Door("centre", true)
 let key1 = new Prop("key 1", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
 let key2 = new Prop("key 2", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 400, 1500, 185, 169);
 let key3 = new Prop("key 3", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 500, 200, 185, 169);
 
-let Room1 = new Room(1, "assets/images/rooms/Room1.svg", document.getElementsByClassName("Room1"), [leftUnlocked, centreUnlocked, lockedKeyDoor], {"key 1" : key1, "key 2" : key2, "key 3" : key3});
+let Room1 = new Room(1, "assets/images/rooms/Room1.svg", document.getElementsByClassName("Room1"), [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1, "key 2" : key2, "key 3" : key3});
 
 let Room2 = new Room(2, "assets/images/rooms/Room2.svg", [], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomTwo);
 
-let Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], [leftUnlocked, centreUnlocked, rightUnlocked]);
-
+let Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomThree);
 
 // DEFINING REACHABLE ROOMS 
 Room0.reachableRooms = ["", Room1, "", ""];
-Room1.reachableRooms = ["", "", Room2, Room0];
+Room1.reachableRooms = ["", Room2, "", Room0];
 Room2.reachableRooms = ["", Room3, "", Room1];
-Room3.reachableRooms = [Room1, Room0, "", Room2];
+Room3.reachableRooms = ["", Room0, "", Room2];
+
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
 
 // HARDCODING STUFF
 function roomTwo() {
-    var inspector = document.getElementById('inspector');
-    var inspectProp = document.getElementById('inspectProp');
-
     var numPad = new Inputs("numPad", "", "number", 6, 1553, 1348, 120, 165, "61283");
     var pad = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     pad.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/Keypad.svg');
@@ -81,4 +85,93 @@ function roomTwo() {
     })
     document.getElementById('itemsInRoom').appendChild(pad);
     console.log(code);
+}
+
+function roomThree() {
+    var lightbulb = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+    lightbulb.setAttributeNS('', 'id', 'lightbulb');
+    lightbulb.setAttributeNS('', 'width', '100%');
+    lightbulb.setAttributeNS('', 'height', '100%');
+    lightbulb.setAttributeNS('', 'x', '0');
+    lightbulb.setAttributeNS('', 'y', '0');
+    //--- -... ... . ... ... .. --- -. = obsession
+    //0 = ., 1 = -, 2 = pause
+    document.getElementById('itemsInRoom').appendChild(lightbulb);
+    var flickering = [1, 1, 1, 2, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 1, 1, 1, 2 , 1, 0, 2];
+    function shortpause() {
+        sleep(333);
+    }
+    function long() {
+        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+        pause();
+        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+        shortpause();
+    }
+    function dot() {
+        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+        shortpause();
+        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+        shortpause();
+    }
+    function pause() {
+        sleep(999);
+    }
+    function play() {
+        for (i = 0; i < flickering.length; i++) {
+            switch(flickering[i]) {
+                case 0:
+                    dot();
+                    break;
+                case 1:
+                    long();
+                    break;
+                case 3:
+                    pause();
+                    break;
+            }
+            // if (i == flickering.length - 1 && Room3.doors[1].locked) {
+            //     i = 0;
+            // }
+        }
+    }
+    var numPad = new Inputs("numPad", "", "number", 6, 1553, 1348, 120, 165);
+    var pad = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    pad.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/Keypad.svg');
+    pad.setAttributeNS('', 'id', 'pad');
+    newInput = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    newInput.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspect.svg');
+    pad.setAttributeNS('', 'x', numPad.xPos);
+    pad.setAttributeNS('', 'y', numPad.yPos);
+    pad.setAttributeNS('', 'width', numPad.width);
+    pad.setAttributeNS('', 'height', numPad.height);
+    var code;
+    pad.addEventListener("click", function() {
+        inspector.setAttributeNS('', 'class', '');
+        inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspect.svg');
+        inspectProp.setAttributeNS('', 'class', '');
+        inspectProp.addEventListener("click", openNumPad);
+    });
+    function openNumPad() {
+        code = prompt("Enter the passcode: ");
+        if (code == "obsession" || code == "Obsession" || code == "OBSESSION") {
+            console.log("unlocked");
+            inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectUnlocked.svg');
+            unlock(1);
+        } else {
+            console.log("wrong wtf try again noob");
+            inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectError.svg');
+        }
+    }
+    document.getElementById('background').addEventListener("click", function() {
+        inspector.setAttributeNS('', 'class', 'hide');
+        inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '');
+        inspectProp.setAttributeNS('', 'class', 'hide');
+        pad.setAttributeNS('', 'class', '');
+        inspectProp.removeEventListener("click", openNumPad);
+    })
+    document.getElementById('itemsInRoom').appendChild(pad);
+    console.log(code);
+    var i = 0;
+    play();
 }

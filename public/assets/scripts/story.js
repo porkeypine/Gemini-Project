@@ -38,11 +38,11 @@ var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], [le
 var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], ["", lockedDoor, ""], {}, roomThree);
 
 const cloth = new Prop('cloth', 'assets/images/Cloth.svg', 'assets/images/Cloth.svg', 800, 2100, 260, 260);
-var Room4 = new Room(4, std_bg, [], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
+var Room4 = new Room(4, "assets/images/rooms/Room4.svg", [], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
 
 const lockedGlovesDoor = new Door("centre", true, "gloves");
 const gloves = new Prop("gloves", "assets/images/Gloves.svg", "assets/images/Gloves.svg", 1000, 2000, 260, 260);
-var Room5 = new Room(5, std_bg, [], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
+var Room5 = new Room(5, "assets/images/rooms/Room5.svg", [], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
 
 // DEFINING REACHABLE ROOMS 
 Room0.reachableRooms = ["", Room1, "", ""];

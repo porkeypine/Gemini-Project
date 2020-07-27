@@ -14,7 +14,7 @@
    xml:space="preserve"
    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
    id="svg52"
-   sodipodi:docname="Room2.svg"
+   sodipodi:docname="Room4.svg"
    inkscape:version="1.0 (4035a4fb49, 2020-05-01)"><metadata
    id="metadata58"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
@@ -33,9 +33,9 @@
    inkscape:window-height="1017"
    id="namedview54"
    showgrid="false"
-   inkscape:zoom="0.21144669"
-   inkscape:cx="759.7186"
-   inkscape:cy="1377.4886"
+   inkscape:zoom="0.4228934"
+   inkscape:cx="926.56389"
+   inkscape:cy="829.80721"
    inkscape:window-x="-8"
    inkscape:window-y="-8"
    inkscape:window-maximized="1"
@@ -133,11 +133,12 @@
     </g>
 <text
    xml:space="preserve"
-   style="font-style:normal;font-weight:normal;font-size:96px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
-   x="940.27631"
-   y="716.69446"
+   style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+   x="956.99701"
+   y="730.29126"
    id="text885"><tspan
+     style="font-size:96px"
      sodipodi:role="line"
      id="tspan883"
-     x="940.27631"
-     y="716.69446">3</tspan></text></svg>
+     x="956.99701"
+     y="730.29126">5</tspan></text></svg>

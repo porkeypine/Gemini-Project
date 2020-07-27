@@ -1,6 +1,6 @@
 // HARDCODED STUFF: TEXT, ROOMS, ETC.
 
-
+var howOcdAreYou = 0;
 // STANDARD CONSTANTS
 
 const std_bg = "assets/images/rooms/OneDoorBackground.svg";
@@ -39,14 +39,14 @@ const Text3_1 = new Text("You're positive you saw something on the floor out of 
 const Text3_2 = new Text("The flickering of this light is making you feel pretty dizzy.", "top: 78%", 1, false);
 var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [Text3_1, Text3_2], ["", lockedDoor, ""], {}, roomThree);
 
-const Text4_1 = new Text("Goodness, why would anyone leave a vase that dirty just sitting around?", "top:28%", 0, false);
+const Text4_1 = new Text("Goodness, why would anyone leave a vase that dirty just sitting around?", "top:33%", 0, false);
 const cloth = new Prop('cloth', 'assets/images/Cloth.svg', 'assets/images/Cloth.svg', 800, 2100, 260, 260);
-var Room4 = new Room(4, std_bg, [Text4_1], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
+var Room4 = new Room(4, "assets/images/rooms/Room4.svg", [Text4_1], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
 
-const Text5_1 = new Text("The door is unlocked, but it suddenly occurs to you that whoever owned or touched \nthat dirty vase would likely have touched this doorknob too. \nEven if you can't see it, there could be germs and ...dirty things on it.")
+const Text5_1 = new Text("The door is unlocked, but it suddenly occurs to you that whoever owned or touched \nthat dirty vase would likely have touched this doorknob too. \n\nEven if you can't see it, there could be germs and ...dirty things on it.", "top:30%", 0, false);
 const lockedGlovesDoor = new Door("centre", true, "gloves");
 const gloves = new Prop("gloves", "assets/images/Gloves.svg", "assets/images/Gloves.svg", 1000, 2000, 260, 260);
-var Room5 = new Room(5, std_bg, [], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
+var Room5 = new Room(5, "assets/images/rooms/Room5.svg", [Text5_1], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
 
 // DEFINING REACHABLE ROOMS 
 Room0.reachableRooms = ["", Room1, "", ""];
@@ -371,16 +371,19 @@ function clean() {
             break;
         case 'VaseClean':
             unlock(1);
+            howOcdAreYou++;
             vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseButton.svg');
             vase.setAttributeNS('', 'id', 'VaseButton');
             const textDiv = document.createElement('div');
             textDiv.className = "textContainer";
-            textDiv.style = "top: 30%";
+            textDiv.style = "top: 35%";
             const textPara = document.createElement('p');
             textPara.innerText = "The vase looks clean from far, but you almost definitely \nmissed some spots. Wipe it again?";
             textPara.className = "text";
             textDiv.appendChild(textPara);
             document.body.appendChild(textDiv);
+        case 'VaseButton':
+            howOcdAreYou++;
     }
 }
 
@@ -404,7 +407,7 @@ function roomFive() {
         if (numberOfTimesClicked == 1) {
             const textDiv = document.createElement('div');
             textDiv.className = "textContainer";
-            textDiv.style = "top: 78%";
+            textDiv.style = "top: 80%";
             const textPara = document.createElement('p');
             textPara.id = "uncomfortable";
             textPara.innerText = noGloveText[0];

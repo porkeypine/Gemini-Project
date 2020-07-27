@@ -2,16 +2,9 @@
 
 
 // FROM HTML 
-
-let firstDoor = document.getElementById("firstDoor");
-let firstDoorAjar = document.getElementById("firstDoorAjar");
-let door0 = document.getElementById("door0");
 let secondDoor = document.getElementById("secondDoor");
 let secondDoorAjar = document.getElementById("secondDoorAjar");
 let door1 = document.getElementById("door1");
-let thirdDoor = document.getElementById("thirdDoor");
-let thirdDoorAjar = document.getElementById("thirdDoorAjar");
-let door2 = document.getElementById("door2");
 let backDoor = document.getElementById("backDoor");
 let currentRoom = document.getElementById("currentRoom");
 let background = document.getElementById("background");
@@ -24,13 +17,7 @@ let slot3 = document.getElementById("slot3");
 let slot4 = document.getElementById("slot4");
 let slot5 = document.getElementById("slot5");
 //erm gotta see if I need these
-let item0 = document.getElementById("item0");
-let item1 = document.getElementById("item1");
-let item2 = document.getElementById("item2");
-let item3 = document.getElementById("item3");
-let item4 = document.getElementById("item4");
-let item5 = document.getElementById("item5");
-let pocket = document.getElementById("inventory");
+let invenSize = 0;
 
 let inspector = document.getElementById("inspector");
 let inspectButt0 = document.getElementById("inspectButt0");
@@ -90,7 +77,7 @@ function makeDraggable(evt) {
     }
     function endDrag(evt) {
         var coord = getMousePosition(evt);
-        if (3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement) {
+        if (invenSize < 6 && 3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement) {
             // updating inventory
             var p = selectedElement.id;
             inventory[p] = curr.props[p]; 
@@ -99,14 +86,6 @@ function makeDraggable(evt) {
             // deleting from room
             delete curr.props[p];
             selectedElement.remove();
-        }
-        //if mouse is over door0, check if its carrying the right prop to unlock 
-        else if (curr.doors[0].locked && 400 < coord.x && coord.x < 780 && 880 < coord.y && coord.y < 1960 
-            && selectedElement) {
-            if (selectedElement.id == curr.doors[0].unlockCondition) {
-                console.log('yay');
-                unlock(0);
-            }
         }
         //if mouse is over door1, check if its carrying the right prop to unlock
         else if (curr.doors[1].locked && 1773 < coord.x && coord.x < 2341 && 1026 < coord.y && coord.y < 2341 
@@ -118,15 +97,6 @@ function makeDraggable(evt) {
                 unlock(1);
             }
         }
-        //if mouse is over door2, check if its carrying the right prop to unlock
-        else if (curr.doors[2].locked && 2900 < coord.x && coord.x < 3400 && 880 < coord.y && coord.y < 3400 
-            && selectedElement) {
-            if (selectedElement.id == curr.doors[2].unlockCondition) {
-                console.log('yay');
-                unlock(2);
-            }
-        }
-
         if (selectedElement.id in inventory) {
             var slot = selectedElement.parentNode.slot;
             console.log(slot);
@@ -150,25 +120,24 @@ function makeDraggable(evt) {
 
 function unlock(doornum) {
     switch(doornum) {
-        case 0:
-            curr.doors[0] = leftUnlocked;
-            break;
         case 1:
             curr.doors[1] = centreUnlocked;
-            break;
-        case 2:
-            curr.doors[2] = rightUnlocked;
             break;
     }
     update(curr);
 } 
 
 function updateInventory(key) {
+    if (key == "morsePaper") {
+        howOcdAreYou++;
+        console.log("you are: " + howOcdAreyou + " OCD");
+    }
     var i = 0;
     // for (var key in inventory) {
     while (this['slot' + i].firstElementChild != null) {
         i++;
     }
+    invenSize = i + 1;
     var item = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     item.setAttributeNS(
         'http://www.w3.org/1999/xlink', 
@@ -314,12 +283,6 @@ function putText(currText, currOrder) {
 // TRAVELLING
 
 // for unlocked doors, just go straight through on click
-if (!curr.doors[0].locked) {
-    firstDoor.addEventListener("click", function() {
-        doorOpenSound.play();
-        update(curr.reachableRooms[0]);
-    });
-}
 function autoUnlock() {
     if (!curr.doors[1].locked) {
         doorOpenSound.play();
@@ -328,12 +291,6 @@ function autoUnlock() {
 }
 secondDoor.addEventListener("click", autoUnlock);
 
-if (!curr.doors[2].locked) {
-    thirdDoor.addEventListener("click", function() {
-        doorOpenSound.play();
-        update(curr.reachableRooms[2]);
-    });
-}
 backDoor.addEventListener("click", function() {
     doorOpenSound.play();
     update(curr.reachableRooms[3]);
@@ -395,20 +352,6 @@ function update(room) {
     putText(curr.text, 0);
     
     // travelling
-    if (room.reachableRooms[0] != "" && room.doors[0] != "" && !room.doors[0].locked) {
-        door0.setAttributeNS('', 'points', '400,880 773,1022 783,1960 419,2182');
-        firstDoor.addEventListener("mouseover", function() {
-            firstDoorAjar.setAttributeNS('', 'class', '');
-            firstDoorAjar.setAttributeNS('', 'name', room.reachableRooms[0].id);
-        });
-        firstDoor.addEventListener("mouseout", function() {
-            firstDoorAjar.setAttributeNS('', 'class', 'hide');
-            firstDoorAjar.setAttributeNS('', 'name', '');
-        });
-    } else {
-        door0.setAttributeNS('', 'points', '');
-    }
-
     if (room.reachableRooms[1] != "" && room.doors[1] != "" && !room.doors[1].locked) {
         door1.setAttributeNS('', 'x', '1773');
         door1.setAttributeNS('', 'y', '1026');
@@ -426,21 +369,7 @@ function update(room) {
         door1.setAttributeNS('', 'width', '0');
         door1.setAttributeNS('', 'height', '0');
     }
-
-    if (room.reachableRooms[2] != "" && room.doors[2] != "" && !room.doors[2].locked) {
-        door2.setAttributeNS('', 'points', '2591,980 3423,766 3411,2434 2953,2108');
-        thirdDoor.addEventListener("mouseover", function() {
-            thirdDoorAjar.setAttributeNS('', 'class', '');
-            thirdDoorAjar.setAttributeNS('', 'name', room.reachableRooms[2].id);
-        });
-        thirdDoor.addEventListener("mouseout", function() {
-            thirdDoorAjar.setAttributeNS('', 'class', 'hide');
-            thirdDoorAjar.setAttributeNS('', 'name', '');
-        });
-    } else {
-        door2.setAttributeNS('', 'points', '');
-    }
-
+    
     if (room.reachableRooms[3] != "") {
 
         door3.setAttributeNS('', 'x', '1440');

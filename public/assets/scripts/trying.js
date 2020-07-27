@@ -100,7 +100,6 @@ function makeDraggable(evt) {
             delete curr.props[p];
             selectedElement.remove();
         }
-        
         //if mouse is over door0, check if its carrying the right prop to unlock 
         else if (curr.doors[0].locked && 400 < coord.x && coord.x < 780 && 880 < coord.y && coord.y < 1960 
             && selectedElement) {
@@ -137,7 +136,10 @@ function makeDraggable(evt) {
             curr.props[selectedElement.id].x = coord.x - offset.x;
             curr.props[selectedElement.id].y = coord.y - offset.y;
         }
-            
+        
+        if (curr == Room4 && selectedElement.id == 'cloth') {
+            clean();
+        }
         selectedElement = false;
     }
 }
@@ -344,6 +346,10 @@ function update(room) {
     while(otherThingsToRemove.firstElementChild) {
         otherThingsToRemove.lastElementChild.remove();
     }
+    var propsToRemove = document.getElementById('props');
+    while(propsToRemove.firstElementChild) {
+        propsToRemove.lastElementChild.remove();
+    }
 
     // removing old text
     var oldTexts = document.getElementsByClassName('textContainer');
@@ -370,7 +376,7 @@ function update(room) {
         prop.setAttributeNS('', 'height', room.props[key].height);
         prop.setAttributeNS('', 'class', 'draggable');
         prop.setAttributeNS('', 'id', room.props[key].name);
-        document.getElementById('itemsInRoom').appendChild(prop);
+        document.getElementById('props').appendChild(prop);
     }
 
     // update curr
@@ -439,7 +445,6 @@ function update(room) {
         door3.setAttributeNS('', 'width', '0');
         door3.setAttributeNS('', 'height', '0');
     }
-
     if (room.func != "nothing") {
         room.func();
         console.log("done");

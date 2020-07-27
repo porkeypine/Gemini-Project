@@ -338,8 +338,11 @@ function update(room) {
     // removing old props
     var thingsToRemove = document.getElementById('itemsInRoom');
     while(thingsToRemove.firstElementChild) {
-        console.log(thingsToRemove.lastElementChild);
         thingsToRemove.lastElementChild.remove();
+    }
+    var otherThingsToRemove = document.getElementById('thingsInTheBack');
+    while(otherThingsToRemove.firstElementChild) {
+        otherThingsToRemove.lastElementChild.remove();
     }
 
     // removing old text
@@ -437,20 +440,6 @@ function update(room) {
         door3.setAttributeNS('', 'height', '0');
     }
 
-    if (room.func != "nothing") {
-        room.func();
-        console.log("done");
-    }
-}
-
-        door3.setAttributeNS('', 'x', '1440');
-        door3.setAttributeNS('', 'y', '2340');
-        door3.setAttributeNS('', 'width', '660');
-        door3.setAttributeNS('', 'height', '141');
-    } else {
-        door3.setAttributeNS('', 'width', '0');
-        door3.setAttributeNS('', 'height', '0');
-    }
     if (room.func != "nothing") {
         room.func();
         console.log("done");

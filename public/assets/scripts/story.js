@@ -31,7 +31,6 @@ const lockedNumDoor = new Door("centre", true);
 const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \nEverything you need is already here.", "top: 25%", 0, false, "displayNextText");
 const Text2_2 = new Text("But... could you have missed out something?", "top: 80%", 1, false);
 var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomTwo);
-
 var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomThree);
 
 // DEFINING REACHABLE ROOMS 
@@ -39,14 +38,6 @@ Room0.reachableRooms = ["", Room1, "", ""];
 Room1.reachableRooms = ["", Room2, "", Room0];
 Room2.reachableRooms = ["", Room3, "", Room1];
 Room3.reachableRooms = ["", Room0, "", Room2];
-
-async function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
 
 // HARDCODING STUFF
 function roomTwo() {
@@ -78,7 +69,7 @@ function roomTwo() {
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectError.svg');
         }
     }
-    document.getElementById('background').addEventListener("click", function() {
+    background.addEventListener("click", function() {
         inspector.setAttributeNS('', 'class', 'hide');
         inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '');
         inspectProp.setAttributeNS('', 'class', 'hide');
@@ -97,7 +88,7 @@ function roomThree() {
     lightbulb.setAttributeNS('', 'height', '100%');
     lightbulb.setAttributeNS('', 'x', '0');
     lightbulb.setAttributeNS('', 'y', '0');
-    document.getElementById('itemsInRoom').appendChild(lightbulb);
+    document.getElementById('thingsInTheBack').appendChild(lightbulb);
     console.log(document.getElementById('itemsInRoom'));
     var flickering = [1, 1, 1, 2, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 1, 1, 1, 2 , 1, 0, 2];
     //-0 on, 1200 off, -1600 on, 2800 off, - 3200 on, 4400 off, -4800 on, 6000 off, .6400 on, 6800 off, .7200 on, 7600 off, . 8000 on, 8400 off, .9600 on, 10000 off
@@ -115,7 +106,7 @@ function roomThree() {
             lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
         }, 33600);
     }
-    function play() {
+        function play() {
         setTimeout(function() {
             lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
             on();
@@ -333,11 +324,11 @@ function roomThree() {
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectUnlocked.svg');
             unlock(1);
         } else {
-            console.log("wrong wtf try again noob");
+            console.log("wrong");
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectError.svg');
         }
     }
-    document.getElementById('background').addEventListener("click", function() {
+    background.addEventListener("click", function() {
         inspector.setAttributeNS('', 'class', 'hide');
         inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '');
         inspectProp.setAttributeNS('', 'class', 'hide');
@@ -345,6 +336,5 @@ function roomThree() {
         inspectProp.removeEventListener("click", openNumPad);
     })
     document.getElementById('itemsInRoom').appendChild(pad);
-    var i = 0;
     play();
 }

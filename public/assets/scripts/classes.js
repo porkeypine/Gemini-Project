@@ -19,12 +19,10 @@ class Room {
         this.id = id;
         this.backgroundSrc = backgroundSrc;
         this.text = text;
-        // listed in the order of left, centre, right, back
-        this.reachableRooms = []; 
-        // iff there's a reachable room for left/centre/right, there will be doors listed in order of left/centre/right
-        this.doors = doors;
+        this.doors = doors; // listed in the order of left, centre, right
         this.props = props;
         this.func = func;
+        this.reachableRooms = []; // listed in the order of left, centre, right, back
     }
 }
 

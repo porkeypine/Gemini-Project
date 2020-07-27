@@ -338,7 +338,7 @@ function roomThree() {
     });
     function openNumPad() {
         code = prompt("Enter the passcode: ");
-        if (code == "obsession" || code == "Obsession" || code == "OBSESSION") {
+        if (code.toLowerCase() == "obsession") {
             console.log("unlocked");
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeyboardInspectUnlocked.svg');
             unlock(1);

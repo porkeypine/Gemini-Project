@@ -32,7 +32,7 @@ let inspectButt4 = document.getElementById("inspectButt4");
 let deleteButt4 = document.getElementById("deleteButt4");
 let inspectButt5 = document.getElementById("inspectButt5");
 let deleteButt5 = document.getElementById("deleteButt5");
-
+let song = document.getElementById("song");
 let overlay = document.getElementById("overlay");
 
 let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
@@ -77,7 +77,7 @@ function makeDraggable(evt) {
     }
     function endDrag(evt) {
         var coord = getMousePosition(evt);
-        if (invenSize < 6 && 3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement) {
+        if (invenSize < 6 && 3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement && inventory[selectedElement.id] == undefined) {
             // updating inventory
             var p = selectedElement.id;
             inventory[p] = curr.props[p]; 
@@ -308,6 +308,9 @@ backDoor.addEventListener("click", function() {
 
 function update(room) {
     console.log(room);
+    if(song.paused || song.duration == 0) {
+        song.play();
+    }
 
     // removing old props
     var thingsToRemove = document.getElementById('itemsInRoom');

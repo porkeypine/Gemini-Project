@@ -19,25 +19,29 @@ const Text0_1 = new Text("You open your eyes slowly, groggy with sleep. \nYou're
 const Text0_2 = new Text("Get up.", "", 0, true); 
 const Text0_3 = new Text("You stand up, blood rushing dizzily away from your head. \nSpots dance in your vision for a moment, \n and you lean back against the wall until you're steady.", "top: 40%", 1, false, "displayNextText");
 const Text0_4 = new Text("The door is unlocked.", "top:80%", 2, false);
-var Room0 = new Room(0, "assets/images/rooms/Room0.svg", [Text0_1, Text0_2, Text0_3, Text0_4], ["", centreUnlocked, ""]);
+var Room0 = new Room(0, "assets/images/rooms/OneDoorBackground.svg", [Text0_1, Text0_2, Text0_3, Text0_4], ["", centreUnlocked, ""]);
 
 const lockedKeyDoor = new Door("centre", true, "key 1");
 const key1 = new Prop("key 1", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
 const Text1_1 = new Text("You enter the next room and the door shuts behind you. \nThis room is exactly the same as the previous one, \nbut there is a key on the floor that you decide to pick up.", "top:25%", 0, false, "displayNextText");
 const Text1_2 = new Text("\nYou figure that you'd try the door behind you.", "top:50%", 1, false);
-var Room1 = new Room(1, "assets/images/rooms/Room1.svg", [Text1_1, Text1_2], [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1});
+var Room1 = new Room(1, "assets/images/rooms/OneDoorBackground.svg", [Text1_1, Text1_2], [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1});
 
-const lockedNumDoor = new Door("centre", true);
+const lockedDoor = new Door("centre", true);
 const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \nEverything you need is already here.", "top: 25%", 0, false, "displayNextText");
 const Text2_2 = new Text("But... could you have missed out something?", "top: 80%", 1, false);
-var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomTwo);
-var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], [leftUnlocked, lockedNumDoor, rightUnlocked], {}, roomThree);
+const morsePaper = new Prop('morsePaper', 'assets/images/MorseCodePaper.svg', 'assets/images/MorseCodePaperInspect.svg', 727, 2178, 300, 134);
+const cloth = new Prop('cloth', 'assets/images/Cloth.svg', 'assets/images/Cloth.svg', 800, 2190, 300, 300);
+var Room2 = new Room(2, "assets/images/rooms/OneDoorBackground.svg", [Text2_1, Text2_2], [leftUnlocked, lockedDoor, rightUnlocked], {}, roomTwo);
+var Room3 = new Room(3, "assets/images/rooms/OneDoorBackground.svg", [], ["", lockedDoor, ""], {}, roomThree);
+var Room4 = new Room(4, "assets/images/rooms/OneDoorBackground.svg", [], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
 
 // DEFINING REACHABLE ROOMS 
 Room0.reachableRooms = ["", Room1, "", ""];
 Room1.reachableRooms = ["", Room2, "", Room0];
 Room2.reachableRooms = ["", Room3, "", Room1];
-Room3.reachableRooms = ["", Room0, "", Room2];
+Room3.reachableRooms = ["", Room4, "", Room2];
+Room4.reachableRooms = ["", Room0, "", Room3];
 
 // HARDCODING STUFF
 function roomTwo() {
@@ -45,12 +49,11 @@ function roomTwo() {
     var pad = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     pad.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/Keypad.svg');
     pad.setAttributeNS('', 'id', 'pad');
-    newInput = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    newInput.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspect.svg');
     pad.setAttributeNS('', 'x', numPad.xPos);
     pad.setAttributeNS('', 'y', numPad.yPos);
     pad.setAttributeNS('', 'width', numPad.width);
     pad.setAttributeNS('', 'height', numPad.height);
+    document.getElementById('itemsInRoom').appendChild(pad);
     var code;
     pad.addEventListener("click", function() {
         inspector.setAttributeNS('', 'class', '');
@@ -65,7 +68,7 @@ function roomTwo() {
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectUnlocked.svg');
             unlock(1);
         } else {
-            console.log("wrong wtf try again noob");
+            console.log("wrong");
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectError.svg');
         }
     }
@@ -76,10 +79,10 @@ function roomTwo() {
         pad.setAttributeNS('', 'class', '');
         inspectProp.removeEventListener("click", openNumPad);
     })
-    document.getElementById('itemsInRoom').appendChild(pad);
 }
 
 function roomThree() {
+    Room2.props['morsePaper'] = morsePaper;
     console.log(document.getElementById('background'));
     var lightbulb = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
@@ -304,8 +307,6 @@ function roomThree() {
     var pad = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     pad.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/Keypad.svg');
     pad.setAttributeNS('', 'id', 'pad');
-    newInput = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    newInput.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspect.svg');
     pad.setAttributeNS('', 'x', numPad.xPos);
     pad.setAttributeNS('', 'y', numPad.yPos);
     pad.setAttributeNS('', 'width', numPad.width);
@@ -313,7 +314,7 @@ function roomThree() {
     var code;
     pad.addEventListener("click", function() {
         inspector.setAttributeNS('', 'class', '');
-        inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspect.svg');
+        inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeyboardInspect.svg');
         inspectProp.setAttributeNS('', 'class', '');
         inspectProp.addEventListener("click", openNumPad);
     });
@@ -321,11 +322,11 @@ function roomThree() {
         code = prompt("Enter the passcode: ");
         if (code == "obsession" || code == "Obsession" || code == "OBSESSION") {
             console.log("unlocked");
-            inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectUnlocked.svg');
+            inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeyboardInspectUnlocked.svg');
             unlock(1);
         } else {
             console.log("wrong");
-            inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectError.svg');
+            inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeyboardInspectError.svg');
         }
     }
     background.addEventListener("click", function() {
@@ -337,4 +338,42 @@ function roomThree() {
     })
     document.getElementById('itemsInRoom').appendChild(pad);
     play();
+}
+
+var vase = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+function clean() {
+    console.log(clean);
+    switch (vase.getAttributeNS('', 'id')) {
+        case 'VaseVeryDirty':
+            vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseLessDirty.svg');
+            vase.setAttributeNS('', 'id', 'VaseLessDirty');
+            break;
+        case 'VaseLessDirty':
+            vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseLittleDirty.svg');
+            vase.setAttributeNS('', 'id', 'VaseLittleDirty');
+            break;
+        case 'VaseLittleDirty':
+            vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseClean.svg');
+            vase.setAttributeNS('', 'id', 'VaseClean');
+            break;
+        case 'VaseClean':
+            unlock(1);
+            vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseButton.svg');
+            vase.setAttributeNS('', 'id', 'VaseButton');
+    }
+}
+var clothprop = document.getElementById('cloth');
+if (clothprop.x < 1650 && clothprop.x > 1150 && clothprop.y < 1625 && clothprop.y > 1175) {
+    clean();
+}
+function roomFour() {
+    // var vase = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseVeryDirty.svg');
+    vase.setAttributeNS('', 'id', 'VaseVeryDirty');
+    vase.setAttributeNS('', 'x', '1150');
+    vase.setAttributeNS('', 'y', '1175');
+    vase.setAttributeNS('', 'width', '500');
+    vase.setAttributeNS('', 'height', '900');
+    document.getElementById('itemsInRoom').appendChild(vase);
+    
 }

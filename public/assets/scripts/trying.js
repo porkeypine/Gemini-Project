@@ -2,7 +2,6 @@
 
 
 // FROM HTML 
-
 let firstDoor = document.getElementById("firstDoor");
 let firstDoorAjar = document.getElementById("firstDoorAjar");
 let door0 = document.getElementById("door0");
@@ -24,13 +23,7 @@ let slot3 = document.getElementById("slot3");
 let slot4 = document.getElementById("slot4");
 let slot5 = document.getElementById("slot5");
 //erm gotta see if I need these
-let item0 = document.getElementById("item0");
-let item1 = document.getElementById("item1");
-let item2 = document.getElementById("item2");
-let item3 = document.getElementById("item3");
-let item4 = document.getElementById("item4");
-let item5 = document.getElementById("item5");
-let pocket = document.getElementById("inventory");
+let invenSize = 0;
 
 let inspector = document.getElementById("inspector");
 let inspectButt0 = document.getElementById("inspectButt0");
@@ -90,7 +83,7 @@ function makeDraggable(evt) {
     }
     function endDrag(evt) {
         var coord = getMousePosition(evt);
-        if (3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement) {
+        if (invenSize < 6 && 3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement) {
             // updating inventory
             var p = selectedElement.id;
             inventory[p] = curr.props[p]; 
@@ -164,11 +157,16 @@ function unlock(doornum) {
 } 
 
 function updateInventory(key) {
+    if (key == "morsePaper") {
+        howOcdAreYou++;
+        console.log("you are: " + howOcdAreyou + " OCD");
+    }
     var i = 0;
     // for (var key in inventory) {
     while (this['slot' + i].firstElementChild != null) {
         i++;
     }
+    invenSize = i + 1;
     var item = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     item.setAttributeNS(
         'http://www.w3.org/1999/xlink', 

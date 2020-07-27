@@ -1,6 +1,6 @@
 // HARDCODED STUFF: TEXT, ROOMS, ETC.
 
-
+var howOcdAreYou = 0;
 // STANDARD CONSTANTS
 
 const std_bg = "assets/images/rooms/OneDoorBackground.svg";
@@ -367,8 +367,11 @@ function clean() {
             break;
         case 'VaseClean':
             unlock(1);
+            howOcdAreYou++;
             vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseButton.svg');
             vase.setAttributeNS('', 'id', 'VaseButton');
+        case 'VaseButton':
+            howOcdAreYou++;
     }
 }
 

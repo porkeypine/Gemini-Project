@@ -111,6 +111,8 @@ function makeDraggable(evt) {
         //if mouse is over door1, check if its carrying the right prop to unlock
         else if (curr.doors[1].locked && 1773 < coord.x && coord.x < 2341 && 1026 < coord.y && coord.y < 2341 
             && selectedElement) {
+            console.log(selectedElement.id);
+            console.log(curr.doors[1].unlockCondition);
             if (selectedElement.id == curr.doors[1].unlockCondition) {
                 console.log('yay');
                 unlock(1);
@@ -293,7 +295,7 @@ function putText(currText, currOrder) {
                 if (firstText.specialFunction == "displayNextText") {
                     setTimeout(function(){
                         currentRoom.addEventListener("click", nextText);
-                    }, 1000);
+                    }, 300);
                 }
             }
 
@@ -415,8 +417,6 @@ function update(room) {
             secondDoorAjar.setAttributeNS('', 'name', '');
         });
     } else {
-        // door1.setAttributeNS('', 'x', '0');
-        // door1.setAttributeNS('', 'y', '0');
         door1.setAttributeNS('', 'width', '0');
         door1.setAttributeNS('', 'height', '0');
     }

@@ -19,29 +19,38 @@ const Text0_1 = new Text("You open your eyes slowly, groggy with sleep. \nYou're
 const Text0_2 = new Text("Get up.", "", 0, true); 
 const Text0_3 = new Text("You stand up, blood rushing dizzily away from your head. \nSpots dance in your vision for a moment, \n and you lean back against the wall until you're steady.", "top: 40%", 1, false, "displayNextText");
 const Text0_4 = new Text("The door is unlocked.", "top:80%", 2, false);
-var Room0 = new Room(0, "assets/images/rooms/OneDoorBackground.svg", [Text0_1, Text0_2, Text0_3, Text0_4], ["", centreUnlocked, ""]);
+var Room0 = new Room(0, "assets/images/rooms/Room0.svg", [Text0_1, Text0_2, Text0_3, Text0_4], ["", centreUnlocked, ""]);
 
 const lockedKeyDoor = new Door("centre", true, "key 1");
 const key1 = new Prop("key 1", "assets/images/Key.svg", "assets/images/KeyInspect.svg", 727, 2178, 185, 169);
-const Text1_1 = new Text("You enter the next room and the door shuts behind you. \nThis room is exactly the same as the previous one, \nbut there is a key on the floor that you decide to pick up.", "top:25%", 0, false, "displayNextText");
-const Text1_2 = new Text("\nYou figure that you'd try the door behind you.", "top:50%", 1, false);
-var Room1 = new Room(1, "assets/images/rooms/OneDoorBackground.svg", [Text1_1, Text1_2], [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1});
+const Text1_1 = new Text("You enter the next room and the door shuts behind you. \nThis room is exactly the same as the previous one, \nbut there is a key on the floor you can pick up.", "top:28%", 0, false, "displayNextText");
+// BUGGY: can't pick up the key before the text all disappears
+const Text1_2 = new Text("You figure you can also try the door behind you.", "top:40%", 1, false);
+var Room1 = new Room(1, "assets/images/rooms/Room1.svg", [Text1_1, Text1_2], [leftUnlocked, lockedKeyDoor, rightUnlocked], {"key 1" : key1});
 
 const lockedDoor = new Door("centre", true);
-const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \nEverything you need is already here.", "top: 25%", 0, false, "displayNextText");
+
+const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \nEverything you need is already here.", "top: 28%", 0, false, "displayNextText");
 const Text2_2 = new Text("But... could you have missed out something?", "top: 80%", 1, false);
 const morsePaper = new Prop('morsePaper', 'assets/images/MorseCodePaper.svg', 'assets/images/MorseCodePaperInspect.svg', 727, 2178, 300, 134);
-const cloth = new Prop('cloth', 'assets/images/Cloth.svg', 'assets/images/Cloth.svg', 800, 2190, 300, 300);
-var Room2 = new Room(2, "assets/images/rooms/OneDoorBackground.svg", [Text2_1, Text2_2], [leftUnlocked, lockedDoor, rightUnlocked], {}, roomTwo);
-var Room3 = new Room(3, "assets/images/rooms/OneDoorBackground.svg", [], ["", lockedDoor, ""], {}, roomThree);
-var Room4 = new Room(4, "assets/images/rooms/OneDoorBackground.svg", [], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
+var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], [leftUnlocked, lockedDoor, rightUnlocked], {}, roomTwo);
+
+var Room3 = new Room(3, "assets/images/rooms/Room3.svg", [], ["", lockedDoor, ""], {}, roomThree);
+
+const cloth = new Prop('cloth', 'assets/images/Cloth.svg', 'assets/images/Cloth.svg', 800, 2100, 260, 260);
+var Room4 = new Room(4, std_bg, [], ["", lockedDoor, ""], {'cloth' : cloth}, roomFour);
+
+const lockedGlovesDoor = new Door("centre", true, "gloves");
+const gloves = new Prop("gloves", "assets/images/Gloves.svg", "assets/images/Gloves.svg", 1000, 2000, 260, 260);
+var Room5 = new Room(5, std_bg, [], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
 
 // DEFINING REACHABLE ROOMS 
 Room0.reachableRooms = ["", Room1, "", ""];
 Room1.reachableRooms = ["", Room2, "", Room0];
 Room2.reachableRooms = ["", Room3, "", Room1];
 Room3.reachableRooms = ["", Room4, "", Room2];
-Room4.reachableRooms = ["", Room0, "", Room3];
+Room4.reachableRooms = ["", Room5, "", Room3];
+Room5.reachableRooms = ["", Room0, "", Room4];
 
 // HARDCODING STUFF
 function roomTwo() {
@@ -109,7 +118,7 @@ function roomThree() {
             lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
         }, 33600);
     }
-        function play() {
+    function play() {
         setTimeout(function() {
             lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
             on();
@@ -366,6 +375,7 @@ var clothprop = document.getElementById('cloth');
 if (clothprop.x < 1650 && clothprop.x > 1150 && clothprop.y < 1625 && clothprop.y > 1175) {
     clean();
 }
+
 function roomFour() {
     // var vase = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseVeryDirty.svg');
@@ -376,4 +386,44 @@ function roomFour() {
     vase.setAttributeNS('', 'height', '900');
     document.getElementById('itemsInRoom').appendChild(vase);
     
+}
+//BUGGY CLOTH MAKE OPAQUE
+
+function roomFive() {
+    function imUncomfortable() {
+        console.log(curr.doors[1].locked);
+        numberOfTimesClicked++;
+        console.log("Clicked door " + numberOfTimesClicked);
+        if (numberOfTimesClicked == 1) {
+            const textDiv = document.createElement('div');
+            textDiv.className = "textContainer";
+            textDiv.style = "top: 78%";
+            const textPara = document.createElement('p');
+            textPara.id = "uncomfortable";
+            textPara.innerText = noGloveText[numberOfTimesClicked-1];
+            textPara.className = "text";
+            textDiv.appendChild(textPara);
+            document.body.appendChild(textDiv);
+        } else if (numberOfTimesClicked == 2) {
+            document.getElementById("uncomfortable").innerText = noGloveText[numberOfTimesClicked-1];
+        } else if (numberOfTimesClicked >= 3) {
+            document.getElementById("uncomfortable").innerText = noGloveText[numberOfTimesClicked-1];
+            unlock(1);
+            secondDoor.removeEventListener("click", imUncomfortable);
+        } else {
+            console.log('zero clicks clicked somehow');
+        }
+    }
+
+    setTimeout(function(){
+        door1.setAttributeNS('', 'x', '1773');
+        door1.setAttributeNS('', 'y', '1026');
+        door1.setAttributeNS('', 'width', '568');
+        door1.setAttributeNS('', 'height', '761');
+        var numberOfTimesClicked = 0;
+        var noGloveText = ["The idea makes you anxious, \nand you cringe back before you touch the door knob.", "You're really not sure this is a great idea.", "You don't like this, but... well, alright then."];
+        // overlay.classList.remove('hide');
+        
+        secondDoor.addEventListener("click", imUncomfortable);
+    }, 300);
 }

@@ -387,39 +387,47 @@ function roomFour() {
 
 function roomFive() {
     function imUncomfortable() {
-        console.log(curr.doors[1].locked);
         numberOfTimesClicked++;
-        console.log("Clicked door " + numberOfTimesClicked);
+        console.log("Clicked door " + numberOfTimesClicked + " times");
         if (numberOfTimesClicked == 1) {
             const textDiv = document.createElement('div');
             textDiv.className = "textContainer";
             textDiv.style = "top: 78%";
             const textPara = document.createElement('p');
             textPara.id = "uncomfortable";
-            textPara.innerText = noGloveText[numberOfTimesClicked-1];
+            textPara.innerText = noGloveText[0];
             textPara.className = "text";
             textDiv.appendChild(textPara);
             document.body.appendChild(textDiv);
         } else if (numberOfTimesClicked == 2) {
-            document.getElementById("uncomfortable").innerText = noGloveText[numberOfTimesClicked-1];
+            document.getElementById("uncomfortable").innerText = noGloveText[1];
         } else if (numberOfTimesClicked >= 3) {
-            document.getElementById("uncomfortable").innerText = noGloveText[numberOfTimesClicked-1];
             unlock(1);
+            // const textDiv = document.createElement('div');
+            // textDiv.className = "textContainer";
+            // textDiv.style = "top: 78%";
+            // const textPara = document.createElement('p');
+            // textPara.id = "uncomfortable";
+            // textPara.innerText = noGloveText[2];
+            // textPara.className = "text";
+            // textDiv.appendChild(textPara);
+            // document.body.appendChild(textDiv);
             secondDoor.removeEventListener("click", imUncomfortable);
         } else {
             console.log('zero clicks clicked somehow');
         }
     }
 
-    setTimeout(function(){
-        door1.setAttributeNS('', 'x', '1773');
-        door1.setAttributeNS('', 'y', '1026');
-        door1.setAttributeNS('', 'width', '568');
-        door1.setAttributeNS('', 'height', '761');
-        var numberOfTimesClicked = 0;
-        var noGloveText = ["The idea makes you anxious, \nand you cringe back before you touch the door knob.", "You're really not sure this is a great idea.", "You don't like this, but... well, alright then."];
-        // overlay.classList.remove('hide');
-        
-        secondDoor.addEventListener("click", imUncomfortable);
-    }, 300);
+    secondDoor.removeEventListener("click", autoUnlock);
+    
+    door1.setAttributeNS('', 'x', '1773');
+    door1.setAttributeNS('', 'y', '1026');
+    door1.setAttributeNS('', 'width', '568');
+    door1.setAttributeNS('', 'height', '761');
+    var numberOfTimesClicked = 0;
+    var noGloveText = ["The idea makes you anxious, \nand you cringe back before you touch the door knob.", "You're really not sure this is a great idea.", "You don't like this, but... well, alright then."];
+    // overlay.classList.remove('hide');
+
+    secondDoor.addEventListener("click", imUncomfortable);
+    secondDoor.addEventListener("click", autoUnlock);
 }

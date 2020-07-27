@@ -44,8 +44,8 @@ let overlay = document.getElementById("overlay");
 let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
 doorOpenSound.volume = 0.27;
 
-let curr = Room0;
-update(Room0);
+let curr = Room4;
+update(Room4);
 
 // INVENTORY AND PROPS
 let inventory = {};
@@ -318,12 +318,14 @@ if (!curr.doors[0].locked) {
         update(curr.reachableRooms[0]);
     });
 }
-if (!curr.doors[1].locked) {
-    secondDoor.addEventListener("click", function() {
+function autoUnlock() {
+    if (!curr.doors[1].locked) {
         doorOpenSound.play();
         update(curr.reachableRooms[1]);
-    });
+    }
 }
+secondDoor.addEventListener("click", autoUnlock);
+
 if (!curr.doors[2].locked) {
     thirdDoor.addEventListener("click", function() {
         doorOpenSound.play();
@@ -363,6 +365,9 @@ function update(room) {
         'http://www.w3.org/1999/xlink', 
         'xlink:href', 
         room.backgroundSrc);
+
+    // remove door event listener
+    // secondDoor.removeEventListener("click", autoUnlock);
         
     // put all props 
     for (var key in room.props) {

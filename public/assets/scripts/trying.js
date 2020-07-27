@@ -283,12 +283,6 @@ function putText(currText, currOrder) {
 // TRAVELLING
 
 // for unlocked doors, just go straight through on click
-if (!curr.doors[1].locked) {
-    secondDoor.addEventListener("click", function() {
-        doorOpenSound.play();
-        update(curr.reachableRooms[1]);
-    });
-}
 function autoUnlock() {
     if (!curr.doors[1].locked) {
         doorOpenSound.play();

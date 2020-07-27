@@ -38,8 +38,8 @@ let overlay = document.getElementById("overlay");
 let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
 doorOpenSound.volume = 0.27;
 
-let curr = Room4;
-update(Room4);
+let curr = Room0;
+update(Room0);
 
 // INVENTORY AND PROPS
 let inventory = {};
@@ -154,7 +154,7 @@ function updateInventory(key) {
 
 //INSPECT AND DELETE
 function inspectFromInventory(slot) {
-    howOcdAreYou++;
+    // howOcdAreYou++;
     console.log('viewing slot' + slot);
     const texts = document.getElementsByClassName('textContainer');
     for (var i = 0; i < texts.length; i++) {

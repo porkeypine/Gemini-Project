@@ -353,8 +353,7 @@ function update(room) {
         'http://www.w3.org/1999/xlink', 
         'xlink:href', 
         room.backgroundSrc);
-    console.log(background);
-
+        
     // put all props 
     for (var key in room.props) {
         var prop = document.createElementNS('http://www.w3.org/2000/svg', 'image');
@@ -444,3 +443,16 @@ function update(room) {
     }
 }
 
+        door3.setAttributeNS('', 'x', '1440');
+        door3.setAttributeNS('', 'y', '2340');
+        door3.setAttributeNS('', 'width', '660');
+        door3.setAttributeNS('', 'height', '141');
+    } else {
+        door3.setAttributeNS('', 'width', '0');
+        door3.setAttributeNS('', 'height', '0');
+    }
+    if (room.func != "nothing") {
+        room.func();
+        console.log("done");
+    }
+}

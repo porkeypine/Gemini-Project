@@ -38,8 +38,8 @@ let overlay = document.getElementById("overlay");
 let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
 doorOpenSound.volume = 0.27;
 
-let curr = Room0;
-update(Room0);
+let curr = Room4;
+update(Room4);
 
 // INVENTORY AND PROPS
 let inventory = {};

@@ -332,7 +332,7 @@ function roomThree() {
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectUnlocked.svg');
             unlock(1);
         } else {
-            console.log("wrong wtf try again noob");
+            console.log("wrong");
             inspectProp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/KeypadInspectError.svg');
         }
     }

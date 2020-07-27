@@ -39,8 +39,12 @@ Room2.reachableRooms = ["", Room3, "", Room1];
 Room3.reachableRooms = ["", Room0, "", Room2];
 
 async function sleep(milliseconds) {
-    setTimeout(milliseconds);
-}
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
 
 // HARDCODING STUFF
 function roomTwo() {
@@ -92,43 +96,217 @@ function roomThree() {
     lightbulb.setAttributeNS('', 'height', '100%');
     lightbulb.setAttributeNS('', 'x', '0');
     lightbulb.setAttributeNS('', 'y', '0');
-    //--- -... ... . ... ... .. --- -. = obsession
-    //0 = ., 1 = -, 2 = pause
     document.getElementById('itemsInRoom').appendChild(lightbulb);
     console.log(document.getElementById('itemsInRoom'));
-    var flickering = [1, 1, 1, 2, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 1, 1, 1, 2 , 1, 0, 2];
-    async function shortpause() {
-        sleep(333);
+    var flickering = [1, 1, 1, 2, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 1, 1, 1, 2 , 1, 0, 2];
+    //-0 on, 1200 off, -1600 on, 2800 off, - 3200 on, 4400 off, -4800 on, 6000 off, .6400 on, 6800 off, .7200 on, 7600 off, . 8000 on, 8400 off, .9600 on, 10000 off
+    //.10400 on, 10800 off, . 11200 on, 11600 off, . 12800 on, 13200 off, .14400 on, 14800 off, .15200 on, 15600 off, . 16000 on, 16400 off, .17600 on, 18000 off,
+    //.18400 on, 18800 off, . 19200 on, 19600 off, .20800 on, 21200 off, . 21600 on, 22000 off, -23200 on, 24400 off, -25600 on, 26800 off, - 28000 on, 29200 off,
+    //-30400 on, 31600 off, . 32000 on, 32400 off, 33600 start again
+    function on() {
+        setInterval(function () {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+        }, 33600);
     }
-    async function on() {
-        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+
+    function off() {
+        setInterval(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+        }, 33600);
     }
-    async function off() {
-        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
-    }
-    async function pause() {
-        sleep(999);
-    }
-    async function play() {
-        for (i = 0; i < flickering.length; i++) {
-            switch(flickering[i]) {
-                case 0:
-                    console.log("dot");
-                    on().then(sleep(333)).then(off()).then(sleep(333));
-                    break;
-                case 1:
-                    console.log("long");
-                    on().then(sleep(999)).then(off()).then(sleep(333));
-                    break;
-                case 2:
-                    console.log("break");
-                    sleep(999);
-                    break;
-            }
-            // if (i == flickering.length - 1 && Room3.doors[1].locked) {
-            //     i = 0;
-            // }
-        }
+    function play() {
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 0);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 1200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 1600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 2800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 3200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 4400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 4800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 6000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 6400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 6800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 7200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 7600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 8000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 8400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 9600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 10000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 10400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 10800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 11200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 11600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 12800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 13200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 14400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 14800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 15200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 15600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 16000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 16400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 17600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 18000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 18400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 18800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 19200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 19600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 20800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 21200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 21600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 22000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 23200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 24400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 25600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 26800);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 28000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 29200);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 30400);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 31600);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
+            on();
+        }, 32000);
+        setTimeout(function() {
+            lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
+            off();
+        }, 32400);
     }
     var numPad = new Inputs("numPad", "", "number", 6, 1553, 1348, 120, 165);
     var pad = document.createElementNS('http://www.w3.org/2000/svg', 'image');

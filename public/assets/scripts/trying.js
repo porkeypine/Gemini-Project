@@ -154,7 +154,7 @@ function updateInventory(key) {
 
 //INSPECT AND DELETE
 function inspectFromInventory(slot) {
-    howOcdAreYou++;
+    // howOcdAreYou++;
     console.log('viewing slot' + slot);
     const texts = document.getElementsByClassName('textContainer');
     for (var i = 0; i < texts.length; i++) {

@@ -48,13 +48,18 @@ const lockedGlovesDoor = new Door("centre", true, "gloves");
 const gloves = new Prop("gloves", "assets/images/Gloves.svg", "assets/images/Gloves.svg", 1000, 2000, 260, 260);
 var Room5 = new Room(5, "assets/images/rooms/Room5.svg", [Text5_1], ["", lockedGlovesDoor, ""], {"gloves" : gloves}, roomFive);
 
+const Text6_1 = new Text("Thank you so much for playing! \n\nThe purpose of this game was to introduce you to various types of OCD symptoms, \nand help put you in the shoes of someone with it. OCD is about much more than \nwashing your hands often or wanting things to be perfect; it involves triggers, anxiety and \nsometimes nonsensical intrusive thoughts, but it can improve with what is known as Exposure \nResponse Prevention therapy -- essentially resisting the compulsions that gives OCD the 'C' in its name! \n\nThis game is still in development, so there's a lot more to come... Stay tuned! :)" + `\n\nYour score is: ${howOcdAreYou}`, "top: 8%", 0, false);
+
+var Room6 = new Room(6, "", [Text6_1], ["", lockedDoor, ""], {}, finale);
+
 // DEFINING REACHABLE ROOMS 
 Room0.reachableRooms = ["", Room1, "", ""];
 Room1.reachableRooms = ["", Room2, "", Room0];
 Room2.reachableRooms = ["", Room3, "", Room1];
 Room3.reachableRooms = ["", Room4, "", Room2];
 Room4.reachableRooms = ["", Room5, "", Room3];
-Room5.reachableRooms = ["", Room0, "", Room4];
+Room5.reachableRooms = ["", Room6, "", Room4];
+Room6.reachableRooms = ["", "", "", Room5];
 
 // HARDCODING STUFF
 function roomTwo() {
@@ -422,6 +427,7 @@ function roomFive() {
         } else if (numberOfTimesClicked >= 3) {
             howOcdAreYou -= 2;
             unlock(1);
+            document.getElementById("uncomfortable").remove();
             // const textDiv = document.createElement('div');
             // textDiv.className = "textContainer";
             // textDiv.style = "top: 78%";
@@ -449,4 +455,17 @@ function roomFive() {
 
     secondDoor.addEventListener("click", imUncomfortable);
     secondDoor.addEventListener("click", autoUnlock);
+}
+
+function finale() {
+    document.getElementById("uncomfortable").remove();
+    var monster = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    monster.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/OCD.svg');
+    monster.setAttributeNS('', 'id', 'monster');
+    monster.setAttributeNS('', 'x', 1100);
+    monster.setAttributeNS('', 'y', 950);
+    monster.setAttributeNS('', 'width', 1200);
+    monster.setAttributeNS('', 'height', 1550);
+    document.getElementById('itemsInRoom').appendChild(monster);
+
 }

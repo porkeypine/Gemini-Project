@@ -371,14 +371,10 @@ function clean() {
             vase.setAttributeNS('', 'id', 'VaseButton');
     }
 }
-var clothprop = document.getElementById('cloth');
-if (clothprop.x < 1650 && clothprop.x > 1150 && clothprop.y < 1625 && clothprop.y > 1175) {
-    clean();
-}
 
+var vase = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseVeryDirty.svg');
 function roomFour() {
-    // var vase = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseVeryDirty.svg');
     vase.setAttributeNS('', 'id', 'VaseVeryDirty');
     vase.setAttributeNS('', 'x', '1150');
     vase.setAttributeNS('', 'y', '1175');

@@ -139,7 +139,8 @@ function makeDraggable(evt) {
             curr.props[selectedElement.id].y = coord.y - offset.y;
         }
         
-        if (curr == Room4 && selectedElement.id == 'cloth') {
+        if (curr == Room4 && coord.x > 1150 && coord.x < 1650 
+        && coord.y > 1175 && coord.y < 1625) {
             clean();
         }
         selectedElement = false;

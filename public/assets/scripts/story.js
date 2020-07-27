@@ -38,12 +38,8 @@ Room1.reachableRooms = ["", Room2, "", Room0];
 Room2.reachableRooms = ["", Room3, "", Room1];
 Room3.reachableRooms = ["", Room0, "", Room2];
 
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
+async function sleep(milliseconds) {
+    setTimeout(milliseconds);
 }
 
 // HARDCODING STUFF
@@ -88,6 +84,7 @@ function roomTwo() {
 }
 
 function roomThree() {
+    console.log(document.getElementById('background'));
     var lightbulb = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
     lightbulb.setAttributeNS('', 'id', 'lightbulb');
@@ -98,36 +95,34 @@ function roomThree() {
     //--- -... ... . ... ... .. --- -. = obsession
     //0 = ., 1 = -, 2 = pause
     document.getElementById('itemsInRoom').appendChild(lightbulb);
+    console.log(document.getElementById('itemsInRoom'));
     var flickering = [1, 1, 1, 2, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 1, 1, 1, 2 , 1, 0, 2];
-    function shortpause() {
+    async function shortpause() {
         sleep(333);
     }
-    function long() {
+    async function on() {
         lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
-        pause();
-        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
-        shortpause();
     }
-    function dot() {
+    async function off() {
         lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/LitBulb.svg');
-        shortpause();
-        lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
-        shortpause();
     }
-    function pause() {
+    async function pause() {
         sleep(999);
     }
-    function play() {
+    async function play() {
         for (i = 0; i < flickering.length; i++) {
             switch(flickering[i]) {
                 case 0:
-                    dot();
+                    console.log("dot");
+                    on().then(sleep(333)).then(off()).then(sleep(333));
                     break;
                 case 1:
-                    long();
+                    console.log("long");
+                    on().then(sleep(999)).then(off()).then(sleep(333));
                     break;
-                case 3:
-                    pause();
+                case 2:
+                    console.log("break");
+                    sleep(999);
                     break;
             }
             // if (i == flickering.length - 1 && Room3.doors[1].locked) {
@@ -171,7 +166,6 @@ function roomThree() {
         inspectProp.removeEventListener("click", openNumPad);
     })
     document.getElementById('itemsInRoom').appendChild(pad);
-    console.log(code);
     var i = 0;
     play();
 }

@@ -38,8 +38,8 @@ let overlay = document.getElementById("overlay");
 let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
 doorOpenSound.volume = 0.27;
 
-let curr = Room0;
-update(Room0);
+let curr = Room4;
+update(Room4);
 
 // INVENTORY AND PROPS
 let inventory = {};
@@ -130,7 +130,7 @@ function unlock(doornum) {
 function updateInventory(key) {
     if (key == "morsePaper") {
         howOcdAreYou++;
-        console.log("you are: " + howOcdAreyou + " OCD");
+        // console.log("you are: " + howOcdAreyou + " OCD");
     }
     var i = 0;
     // for (var key in inventory) {
@@ -154,7 +154,12 @@ function updateInventory(key) {
 
 //INSPECT AND DELETE
 function inspectFromInventory(slot) {
+    howOcdAreYou++;
     console.log('viewing slot' + slot);
+    const texts = document.getElementsByClassName('textContainer');
+    for (var i = 0; i < texts.length; i++) {
+        texts.item(i).classList.toggle('hide');
+    }
     var item = this['slot' + slot].firstElementChild;
     if (inspector.getAttribute("class") == "hide" && item.getAttribute('id') != '') {
         inspector.setAttributeNS('', 'class', '');
@@ -183,6 +188,10 @@ background.addEventListener("click", function(){
             'class',
             'hide'
         );
+        const texts = document.getElementsByClassName('textContainer');
+        for (var i = 0; i < texts.length; i++) {
+            texts.item(i).classList.toggle('hide');
+        }
     }
 });
 inspectButt0.addEventListener("click", function(){
@@ -266,7 +275,7 @@ function putText(currText, currOrder) {
                     setTimeout(function(){
                         currentRoom.addEventListener("click", nextText);
                     }, 300);
-                }
+                } 
             }
 
             textDiv.appendChild(textPara);
@@ -292,6 +301,7 @@ function autoUnlock() {
 secondDoor.addEventListener("click", autoUnlock);
 
 backDoor.addEventListener("click", function() {
+    howOcdAreYou++;
     doorOpenSound.play();
     update(curr.reachableRooms[3]);
 });

@@ -38,8 +38,8 @@ let overlay = document.getElementById("overlay");
 let doorOpenSound = new Audio("assets/sounds/door_knob short.wav");
 doorOpenSound.volume = 0.27;
 
-let curr = Room4;
-update(Room4);
+let curr = Room0;
+update(Room0);
 
 // INVENTORY AND PROPS
 let inventory = {};
@@ -77,7 +77,7 @@ function makeDraggable(evt) {
     }
     function endDrag(evt) {
         var coord = getMousePosition(evt);
-        if (invenSize < 6 && 3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement) {
+        if (invenSize < 6 && 3600 < coord.x && coord.x < 3900 && 200 < coord.y && coord.y < 2100 && selectedElement && inventory[selectedElement.id] == undefined) {
             // updating inventory
             var p = selectedElement.id;
             inventory[p] = curr.props[p]; 

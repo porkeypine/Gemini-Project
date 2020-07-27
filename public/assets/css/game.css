@@ -97,7 +97,7 @@ body, html {
 }
 
 .text {
-    font-family: 'Lucida Sans';
+    font-family: 'Helvetica';
     /* font-size: 0.9rem; */
     margin: 0px;
     padding: 1px;
@@ -106,7 +106,7 @@ body, html {
 }
 
 .clickText {
-    font-family: 'Lucida Sans';
+    font-family: 'Helvetica';
     font-size: 0.9rem;
     font-style: italic;
     margin: 0px;

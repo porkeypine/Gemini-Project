@@ -30,7 +30,7 @@ var Room1 = new Room(1, "assets/images/rooms/Room1.svg", [Text1_1, Text1_2], [""
 
 const lockedDoor = new Door("centre", true);
 
-const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \n\nEverything you need you should already have.", "top: 28%", 0, false, "displayNextText");
+const Text2_1 = new Text("This room is as sparse and empty as the ones before, \nexcept for the keypad by the door. \n\nEverything you need you should already have. \nThe KEY is to LOOK closely.", "top: 28%", 0, false, "displayNextText");
 const Text2_2 = new Text("But... could you have missed out something?", "top: 80%", 1, false);
 const morsePaper = new Prop('morsePaper', 'assets/images/MorseCodePaper.svg', 'assets/images/MorseCodePaperInspect.svg', 727, 2178, 300, 134);
 var Room2 = new Room(2, "assets/images/rooms/Room2.svg", [Text2_1, Text2_2], ["", lockedDoor, ""], {}, roomTwo);

@@ -307,6 +307,7 @@ backDoor.addEventListener("click", function() {
 });
 
 function update(room) {
+    console.log("you are " + howOcdAreYou);
     console.log(room);
     if(song.paused || song.duration == 0) {
         song.play();
@@ -393,6 +394,7 @@ function update(room) {
         door3.setAttributeNS('', 'width', '0');
         door3.setAttributeNS('', 'height', '0');
     }
+
     if (room.func != "nothing") {
         room.func();
         console.log("done");

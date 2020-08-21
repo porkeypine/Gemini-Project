@@ -98,9 +98,12 @@ function roomTwo() {
         inspectProp.removeEventListener("click", openNumPad);
     })
 }
-
+var roomThreeVisited = false;
 function roomThree() {
-    Room2.props['morsePaper'] = morsePaper;
+    if (!roomThreeVisited) {
+        Room2.props['morsePaper'] = morsePaper;
+        roomThreeVisited = true;
+    }
     console.log(document.getElementById('background'));
     var lightbulb = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     lightbulb.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/UnlitBulb.svg');
@@ -394,8 +397,13 @@ function clean() {
 
 var vase = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 vase.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/VaseVeryDirty.svg');
+
+var roomFourVisited = false;
 function roomFour() {
-    vase.setAttributeNS('', 'id', 'VaseVeryDirty');
+    if (!roomFourVisited) {
+        vase.setAttributeNS('', 'id', 'VaseVeryDirty');
+        roomFourVisited = true;
+    }
     vase.setAttributeNS('', 'x', '1150');
     vase.setAttributeNS('', 'y', '1175');
     vase.setAttributeNS('', 'width', '500');
@@ -403,10 +411,8 @@ function roomFour() {
     document.getElementById('itemsInRoom').appendChild(vase);
     
 }
-//BUGGY CLOTH MAKE OPAQUE
 
 function roomFive() {
-    howOcdAreYou += 4;
     function imUncomfortable() {
         numberOfTimesClicked++;
         console.log("Clicked door " + numberOfTimesClicked + " times");
@@ -459,6 +465,7 @@ function roomFive() {
 
 function finale() {
     document.getElementById("uncomfortable").remove();
+    document.getElementById("door3").setAttributeNS("", "class", "hide");
     var monster = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     monster.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'assets/images/OCD.svg');
     monster.setAttributeNS('', 'id', 'monster');
